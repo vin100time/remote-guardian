@@ -1,176 +1,191 @@
 
 import { Card } from "@/components/ui/card";
-import { ArrowUpIcon, ArrowDownIcon, Bell, Settings, ServerIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const Index = () => {
+  // Données pour le graphique linéaire
+  const connectivityData = [
+    { name: 'jeu.', online: 10, offline: 2 },
+    { name: 'ven.', online: 11, offline: 1 },
+    { name: 'sam.', online: 10, offline: 2 },
+    { name: 'dim.', online: 9, offline: 3 },
+    { name: 'lun.', online: 10, offline: 2 },
+    { name: 'mar.', online: 10, offline: 2 },
+    { name: 'mer.', online: 9, offline: 3 },
+  ];
+
+  // Données pour le graphique circulaire
+  const equipmentData = [
+    { name: 'Caméras', value: 45, color: '#2196F3' },
+    { name: 'Routeurs', value: 15, color: '#FFA726' },
+    { name: 'Switches', value: 25, color: '#7E69AB' },
+    { name: 'Serveurs', value: 15, color: '#78909C' },
+  ];
+
   const stats = [
     { 
       label: "Total des sites", 
-      value: "12", 
+      value: "12",
       subtext: "Sites surveillés",
-      change: "+2",
-      trend: "up"
+      textColor: "#1A1F2C"
     },
     { 
       label: "En ligne", 
       value: "10", 
-      subtext: "Sites actifs", 
-      className: "text-success",
-      change: "+1",
-      trend: "up"
+      subtext: "Sites actifs",
+      textColor: "#4CAF50"
     },
     { 
       label: "Hors ligne", 
       value: "1", 
-      subtext: "Sites inactifs", 
-      className: "text-danger",
-      change: "-1",
-      trend: "down"
+      subtext: "Sites inactifs",
+      textColor: "#F44336"
     },
     { 
       label: "Alertes", 
       value: "6", 
-      subtext: "Dernières 24h", 
-      className: "text-warning",
-      change: "+3",
-      trend: "up"
+      subtext: "Dernières 24h",
+      textColor: "#FF9800"
     },
     { 
       label: "Disponibilité", 
       value: "99.4%", 
       subtext: "Temps de service",
-      change: "+0.2%",
-      trend: "up"
+      textColor: "#1A1F2C"
     }
   ];
 
-  const recentAlerts = [
+  const alerts = [
     {
-      id: 1,
-      title: "Serveur Principal",
-      message: "CPU utilisation > 90%",
-      time: "Il y a 5 min",
-      severity: "high"
+      title: "Perte de connexion - Site Marseille Port",
+      time: "2024-03-13 10:30",
+      status: "Nouveau",
+      type: "error"
     },
     {
-      id: 2,
-      title: "Switch Core",
-      message: "Trafic réseau anormal",
-      time: "Il y a 15 min",
-      severity: "medium"
-    }
-  ];
-
-  const recentActivities = [
-    {
-      id: 1,
-      action: "Maintenance planifiée",
-      target: "Serveur DB-01",
-      time: "Dans 2 heures",
-      icon: Settings
+      title: "Utilisation CPU élevée - Serveur SV-01",
+      time: "2024-03-13 10:25",
+      status: "En cours",
+      type: "warning"
     },
     {
-      id: 2,
-      action: "Mise à jour système",
-      target: "Gateway-02",
-      time: "Dans 4 heures",
-      icon: ServerIcon
+      title: "Échec de la sauvegarde - Caméra IP-02",
+      time: "2024-03-13 10:20",
+      status: "Résolu",
+      type: "success"
     }
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Tableau de bord</h1>
-          <p className="text-muted-foreground">
-            Dernière mise à jour : {new Date().toLocaleString()}
+          <h1 className="text-2xl font-semibold">Tableau de bord</h1>
+          <p className="text-sm text-muted-foreground">
+            Dernière mise à jour : 5 février 2025 à 15:14
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
-            <Bell className="w-4 h-4 mr-2" />
-            Notifications
-          </Button>
-          <Button variant="outline">
-            <Settings className="w-4 h-4 mr-2" />
-            Paramètres
-          </Button>
+        <div className="flex items-center gap-2">
+          <span className="text-sm">Global Secure SARL</span>
+          <img
+            src="/placeholder.svg"
+            alt="Company Logo"
+            className="w-8 h-8 rounded-full"
+          />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {stats.map((stat) => (
-          <Card key={stat.label} className="p-4 glass card-hover">
+          <Card key={stat.label} className="p-4 bg-white">
             <p className="text-sm text-muted-foreground">{stat.label}</p>
-            <div className="flex items-center justify-between mt-2">
-              <p className={`text-2xl font-bold ${stat.className}`}>
-                {stat.value}
-              </p>
-              <div className={`flex items-center ${
-                stat.trend === 'up' ? 'text-success' : 'text-danger'
-              }`}>
-                {stat.trend === 'up' ? 
-                  <ArrowUpIcon className="w-4 h-4" /> : 
-                  <ArrowDownIcon className="w-4 h-4" />
-                }
-                <span className="text-sm ml-1">{stat.change}</span>
-              </div>
-            </div>
+            <p className="text-2xl font-bold mt-2" style={{ color: stat.textColor }}>
+              {stat.value}
+            </p>
             <p className="text-xs text-muted-foreground mt-1">{stat.subtext}</p>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <Card className="p-6 glass">
-          <h2 className="text-lg font-semibold mb-4">Alertes Récentes</h2>
-          <div className="space-y-4">
-            {recentAlerts.map((alert) => (
-              <div key={alert.id} className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                <div>
-                  <h3 className="font-medium">{alert.title}</h3>
-                  <p className="text-sm text-muted-foreground">{alert.message}</p>
-                </div>
-                <div className="text-right">
-                  <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                    alert.severity === 'high' ? 'bg-danger/10 text-danger' : 'bg-warning/10 text-warning'
-                  }`}>
-                    {alert.time}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <Button variant="outline" className="w-full mt-4">
-            Voir toutes les alertes
-          </Button>
+      <div className="grid grid-cols-2 gap-4">
+        <Card className="p-4 bg-white">
+          <h2 className="text-lg font-semibold mb-4">Historique de connectivité</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={connectivityData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Line 
+                type="monotone" 
+                dataKey="online" 
+                stroke="#4CAF50" 
+                name="Sites en ligne"
+                strokeWidth={2}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="offline" 
+                stroke="#F44336" 
+                name="Sites hors ligne"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </Card>
 
-        <Card className="p-6 glass">
-          <h2 className="text-lg font-semibold mb-4">Activités Planifiées</h2>
-          <div className="space-y-4">
-            {recentActivities.map((activity) => (
-              <div key={activity.id} className="flex items-center gap-4 p-3 bg-background/50 rounded-lg">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <activity.icon className="w-5 h-5 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium">{activity.action}</h3>
-                  <p className="text-sm text-muted-foreground">{activity.target}</p>
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {activity.time}
-                </div>
-              </div>
-            ))}
-          </div>
-          <Button variant="outline" className="w-full mt-4">
-            Voir toutes les activités
-          </Button>
+        <Card className="p-4 bg-white">
+          <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={equipmentData}
+                innerRadius={60}
+                outerRadius={80}
+                dataKey="value"
+                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+              >
+                {equipmentData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
         </Card>
       </div>
+
+      <Card className="p-4 bg-white">
+        <h2 className="text-lg font-semibold mb-4">Dernières alertes</h2>
+        <div className="space-y-2">
+          {alerts.map((alert, index) => (
+            <div
+              key={index}
+              className="p-3 rounded-lg"
+              style={{
+                backgroundColor: alert.type === 'error' ? '#FEF2F2' : 
+                                alert.type === 'warning' ? '#FEF3C7' : 
+                                '#F0FDF4'
+              }}
+            >
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="font-medium">{alert.title}</p>
+                  <p className="text-sm text-muted-foreground">{alert.time}</p>
+                </div>
+                <span 
+                  className={cn(
+                    "px-2 py-1 rounded text-xs font-medium",
+                    alert.type === 'error' ? "bg-red-100 text-red-800" :
+                    alert.type === 'warning' ? "bg-amber-100 text-amber-800" :
+                    "bg-green-100 text-green-800"
+                  )}
+                >
+                  {alert.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 };

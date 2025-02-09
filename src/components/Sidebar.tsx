@@ -1,26 +1,40 @@
 
-import { HomeIcon, UsersIcon, ServerIcon, BellIcon, SettingsIcon, UserIcon } from "lucide-react";
+import { Menu, Home, Users, Monitor, Bell, Settings, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export const Sidebar = () => {
   const location = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
   
   const links = [
-    { name: "Tableau de bord", icon: HomeIcon, path: "/" },
-    { name: "Sites clients", icon: UsersIcon, path: "/sites" },
-    { name: "Équipements", icon: ServerIcon, path: "/equipements" },
-    { name: "Alertes", icon: BellIcon, path: "/alertes" },
-    { name: "Configuration", icon: SettingsIcon, path: "/configuration" },
-    { name: "Compte", icon: UserIcon, path: "/compte" }
+    { name: "Tableau de bord", icon: Home, path: "/" },
+    { name: "Sites clients", icon: Users, path: "/sites" },
+    { name: "Équipements", icon: Monitor, path: "/equipements" },
+    { name: "Alerts", icon: Bell, path: "/alertes" },
+    { name: "Configuration", icon: Settings, path: "/configuration" },
+    { name: "Compte", icon: User, path: "/compte" }
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-64 glass border-r border-border/50 py-6 px-3 flex flex-col gap-2">
-      <div className="px-4 py-3">
-        <h1 className="text-xl font-bold text-primary">Vigileos</h1>
+    <div className={cn(
+      "fixed left-0 top-0 h-screen bg-white border-r border-border/50 transition-all duration-300",
+      isCollapsed ? "w-20" : "w-64"
+    )}>
+      <div className="flex items-center gap-3 p-4 border-b border-border/50">
+        <button 
+          onClick={() => setIsCollapsed(!isCollapsed)} 
+          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <Menu size={20} />
+        </button>
+        {!isCollapsed && (
+          <h1 className="text-xl font-bold text-[#9b87f5]">Vigileos</h1>
+        )}
       </div>
       
-      <nav className="flex-1 space-y-1">
+      <nav className="p-3 space-y-1">
         {links.map((link) => {
           const isActive = location.pathname === link.path;
           const Icon = link.icon;
@@ -29,14 +43,15 @@ export const Sidebar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${
+              className={cn(
+                "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors",
                 isActive 
-                  ? "bg-primary text-primary-foreground" 
-                  : "hover:bg-secondary"
-              }`}
+                  ? "bg-[#9b87f5] text-white" 
+                  : "hover:bg-gray-100"
+              )}
             >
               <Icon size={20} />
-              <span>{link.name}</span>
+              {!isCollapsed && <span>{link.name}</span>}
             </Link>
           );
         })}
@@ -44,4 +59,3 @@ export const Sidebar = () => {
     </div>
   );
 };
-
