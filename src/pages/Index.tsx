@@ -1,5 +1,4 @@
 
-import { Chart } from "recharts";
 import { Card } from "@/components/ui/card";
 
 const Index = () => {
@@ -38,3 +37,4 @@ const Index = () => {
 };
 
 export default Index;
+

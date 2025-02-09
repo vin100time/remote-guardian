@@ -2,7 +2,7 @@
 import { HomeIcon, UsersIcon, ServerIcon, BellIcon, SettingsIcon, UserIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
-const Sidebar = () => {
+export const Sidebar = () => {
   const location = useLocation();
   
   const links = [
@@ -45,4 +45,3 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
