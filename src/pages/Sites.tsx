@@ -3,10 +3,15 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Sites = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+
   const sites = [
     {
       id: 1,
@@ -58,6 +63,13 @@ const Sites = () => {
     }
   ];
 
+  const filteredSites = sites.filter(site => {
+    const matchesSearch = site.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         site.address.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "all" || site.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -74,23 +86,35 @@ const Sites = () => {
       </div>
 
       <div className="flex items-center gap-4 pb-4">
-        <Input 
-          placeholder="Rechercher un site..." 
-          className="max-w-xs"
-        />
-        <Select defaultValue="all">
-          <option value="all">Tous les statuts</option>
-          <option value="online">En ligne</option>
-          <option value="offline">Hors ligne</option>
-          <option value="warning">Attention</option>
-        </Select>
+        <div className="relative flex-1 max-w-xs">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <Input 
+            placeholder="Rechercher un site..." 
+            className="pl-9"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="relative">
+          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <Select 
+            value={statusFilter} 
+            onChange={(e) => setStatusFilter(e.target.value)} 
+            className="pl-9"
+          >
+            <option value="all">Tous les statuts</option>
+            <option value="online">En ligne</option>
+            <option value="offline">Hors ligne</option>
+            <option value="warning">Attention</option>
+          </Select>
+        </div>
         <Button variant="outline" size="icon" className="ml-auto">
           <RefreshCcw className="w-4 h-4" />
         </Button>
       </div>
 
       <div className="grid gap-4">
-        {sites.map((site) => (
+        {filteredSites.map((site) => (
           <Card key={site.id} className="p-4 glass card-hover">
             <div className="flex items-center justify-between">
               <div>
@@ -99,7 +123,9 @@ const Sites = () => {
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <p className="text-sm font-medium">{site.equipments} équipements</p>
+                  <Link to={`/sites/${site.id}/equipment`} className="text-sm font-medium hover:text-indigo-600">
+                    {site.equipments} équipements
+                  </Link>
                   <p className="text-xs text-muted-foreground">Dernière synchronisation: {site.lastCheck}</p>
                 </div>
                 <div className={cn(

@@ -1,12 +1,19 @@
+
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon } from "lucide-react";
+import { useState } from "react";
+import { ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter } from "lucide-react";
 
 const Equipment = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [siteFilter, setSiteFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+
   const equipment = [
     {
       id: 1,
@@ -79,6 +86,15 @@ const Equipment = () => {
     }
   };
 
+  const filteredEquipment = equipment.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.ip.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = typeFilter === "all" || item.type === typeFilter;
+    const matchesSite = siteFilter === "all" || item.site === siteFilter;
+    const matchesStatus = statusFilter === "all" || item.status === statusFilter;
+    return matchesSearch && matchesType && matchesSite && matchesStatus;
+  });
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -95,32 +111,58 @@ const Equipment = () => {
       </div>
 
       <div className="flex items-center gap-4 pb-4">
-        <Input 
-          placeholder="Rechercher un équipement..." 
-          className="max-w-xs"
-        />
-        <Select defaultValue="all">
-          <option value="all">Tous les types</option>
-          <option value="camera">Caméras</option>
-          <option value="switch">Switches</option>
-          <option value="router">Routeurs</option>
-          <option value="server">Serveurs</option>
-        </Select>
-        <Select defaultValue="all">
-          <option value="all">Tous les sites</option>
-          <option value="paris">Paris Centre</option>
-          <option value="lyon">Lyon Sud</option>
-          <option value="marseille">Marseille Port</option>
-          <option value="bordeaux">Bordeaux Nord</option>
-          <option value="lille">Lille Centre</option>
-          <option value="nantes">Nantes Est</option>
-        </Select>
-        <Select defaultValue="all">
-          <option value="all">Tous les statuts</option>
-          <option value="online">En ligne</option>
-          <option value="offline">Hors ligne</option>
-          <option value="warning">Attention</option>
-        </Select>
+        <div className="relative flex-1 max-w-xs">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <Input 
+            placeholder="Rechercher un équipement..." 
+            className="pl-9"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="relative">
+          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <Select 
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="pl-9"
+          >
+            <option value="all">Tous les types</option>
+            <option value="camera">Caméras</option>
+            <option value="switch">Switches</option>
+            <option value="router">Routeurs</option>
+            <option value="server">Serveurs</option>
+          </Select>
+        </div>
+        <div className="relative">
+          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <Select 
+            value={siteFilter}
+            onChange={(e) => setSiteFilter(e.target.value)}
+            className="pl-9"
+          >
+            <option value="all">Tous les sites</option>
+            <option value="Paris Centre">Paris Centre</option>
+            <option value="Lyon Sud">Lyon Sud</option>
+            <option value="Marseille Port">Marseille Port</option>
+            <option value="Bordeaux Nord">Bordeaux Nord</option>
+            <option value="Lille Centre">Lille Centre</option>
+            <option value="Nantes Est">Nantes Est</option>
+          </Select>
+        </div>
+        <div className="relative">
+          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <Select 
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="pl-9"
+          >
+            <option value="all">Tous les statuts</option>
+            <option value="online">En ligne</option>
+            <option value="offline">Hors ligne</option>
+            <option value="warning">Attention</option>
+          </Select>
+        </div>
         <Button variant="outline" size="icon" className="ml-auto">
           <RefreshCcw className="w-4 h-4" />
         </Button>
@@ -140,7 +182,7 @@ const Equipment = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {equipment.map((item) => (
+            {filteredEquipment.map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium">
                   <div className="flex items-center gap-2">
