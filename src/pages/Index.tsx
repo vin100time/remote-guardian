@@ -1,6 +1,6 @@
-
 import { Card } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { cn } from "@/lib/utils";
 
 const Index = () => {
   // Données pour le graphique linéaire
