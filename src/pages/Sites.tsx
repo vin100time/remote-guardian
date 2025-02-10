@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter } from "lucide-react";
+import { PlusCircle, RefreshCcw, ArrowRight, Trash2Icon, Search, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Sites = () => {
@@ -85,7 +85,7 @@ const Sites = () => {
         </Button>
       </div>
 
-      <div className="flex items-center gap-4 pb-4">
+      <div className="flex items-center gap-4">
         <div className="relative flex-1 max-w-xs">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           <Input 
@@ -116,7 +116,7 @@ const Sites = () => {
 
       <div className="grid gap-4">
         {filteredSites.map((site) => (
-          <Card key={site.id} className="p-4 glass card-hover">
+          <Card key={site.id} className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-semibold">{site.name}</h3>
@@ -140,9 +140,11 @@ const Sites = () => {
                   {site.status === 'warning' && "Attention"}
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="icon">
-                    <Edit2Icon className="w-4 h-4" />
-                  </Button>
+                  <Link to={`/sites/${site.id}/equipment`}>
+                    <Button variant="ghost" size="icon">
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
                   <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-600">
                     <Trash2Icon className="w-4 h-4" />
                   </Button>

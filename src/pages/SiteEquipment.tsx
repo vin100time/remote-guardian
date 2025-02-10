@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, Search, Filter, ServerIcon, PrinterIcon, CameraIcon, NetworkIcon } from "lucide-react";
+import { ArrowLeft, Search, Filter, ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, ArrowRight } from "lucide-react";
 
 const SiteEquipment = () => {
   const { siteId } = useParams();
@@ -116,15 +116,20 @@ const SiteEquipment = () => {
                     <p className="text-sm text-muted-foreground">{item.ip}</p>
                   </div>
                 </div>
-                <div className={cn(
-                  "status-badge",
-                  item.status === 'online' && "status-online",
-                  item.status === 'offline' && "status-offline",
-                  item.status === 'warning' && "status-warning"
-                )}>
-                  {item.status === 'online' && "En ligne"}
-                  {item.status === 'offline' && "Hors ligne"}
-                  {item.status === 'warning' && "Attention"}
+                <div className="flex items-center gap-2">
+                  <div className={cn(
+                    "status-badge",
+                    item.status === 'online' && "status-online",
+                    item.status === 'offline' && "status-offline",
+                    item.status === 'warning' && "status-warning"
+                  )}>
+                    {item.status === 'online' && "En ligne"}
+                    {item.status === 'offline' && "Hors ligne"}
+                    {item.status === 'warning' && "Attention"}
+                  </div>
+                  <Button variant="ghost" size="icon">
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
                 </div>
               </div>
             </Card>

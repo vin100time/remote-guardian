@@ -7,6 +7,8 @@ import Layout from "./components/Layout";
 import Index from "./pages/Index";
 import Sites from "./pages/Sites";
 import Equipment from "./pages/Equipment";
+import SiteEquipment from "./pages/SiteEquipment";
+import EquipmentDetail from "./pages/EquipmentDetail";
 import Alerts from "./pages/Alerts";
 import Settings from "./pages/Settings";
 import Account from "./pages/Account";
@@ -21,6 +23,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/sites" element={<Sites />} />
+          <Route path="/sites/:siteId/equipment" element={<SiteEquipment />} />
+          <Route path="/equipment/:id" element={<EquipmentDetail />} />
           <Route path="/equipements" element={<Equipment />} />
           <Route path="/alertes" element={<Alerts />} />
           <Route path="/configuration" element={<Settings />} />

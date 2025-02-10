@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,7 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter } from "lucide-react";
+import { ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Equipment = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -211,9 +211,11 @@ const Equipment = () => {
                 <TableCell>{item.lastMaintenance}</TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Button variant="ghost" size="icon">
-                      <Edit2Icon className="w-4 h-4" />
-                    </Button>
+                    <Link to={`/equipment/${item.id}`}>
+                      <Button variant="ghost" size="icon">
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </Link>
                     <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-600">
                       <Trash2Icon className="w-4 h-4" />
                     </Button>
