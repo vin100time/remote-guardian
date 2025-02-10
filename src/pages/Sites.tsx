@@ -1,7 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -96,16 +96,17 @@ const Sites = () => {
           />
         </div>
         <div className="relative">
-          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Select 
-            value={statusFilter} 
-            onChange={(e) => setStatusFilter(e.target.value)} 
-            className="pl-9"
-          >
-            <option value="all">Tous les statuts</option>
-            <option value="online">En ligne</option>
-            <option value="offline">Hors ligne</option>
-            <option value="warning">Attention</option>
+          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="pl-9 min-w-[180px]">
+              <SelectValue placeholder="Tous les statuts" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous les statuts</SelectItem>
+              <SelectItem value="online">En ligne</SelectItem>
+              <SelectItem value="offline">Hors ligne</SelectItem>
+              <SelectItem value="warning">Attention</SelectItem>
+            </SelectContent>
           </Select>
         </div>
         <Button variant="outline" size="icon" className="ml-auto">
