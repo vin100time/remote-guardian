@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter, ArrowRight } from "lucide-react";
+import { ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter, ArrowRight, VideoIcon, WifiIcon, RouterIcon, MonitorIcon, DeviceIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Equipment = () => {
@@ -73,16 +73,22 @@ const Equipment = () => {
 
   const getIcon = (type: string) => {
     switch(type) {
-      case 'server':
-        return <ServerIcon className="w-5 h-5" />;
       case 'camera':
         return <CameraIcon className="w-5 h-5" />;
+      case 'video-recorder':
+        return <VideoIcon className="w-5 h-5" />;
       case 'switch':
         return <NetworkIcon className="w-5 h-5" />;
-      case 'router':
-        return <PrinterIcon className="w-5 h-5" />;
-      default:
+      case 'server':
         return <ServerIcon className="w-5 h-5" />;
+      case 'antenna':
+        return <WifiIcon className="w-5 h-5" />;
+      case 'router':
+        return <RouterIcon className="w-5 h-5" />;
+      case 'pc':
+        return <MonitorIcon className="w-5 h-5" />;
+      default:
+        return <DeviceIcon className="w-5 h-5" />;
     }
   };
 
@@ -129,9 +135,13 @@ const Equipment = () => {
             <SelectContent>
               <SelectItem value="all">Tous les types</SelectItem>
               <SelectItem value="camera">Caméras</SelectItem>
+              <SelectItem value="video-recorder">Enregistreurs vidéo</SelectItem>
               <SelectItem value="switch">Switches</SelectItem>
-              <SelectItem value="router">Routeurs</SelectItem>
               <SelectItem value="server">Serveurs</SelectItem>
+              <SelectItem value="antenna">Antennes/Points d'accès WiFi</SelectItem>
+              <SelectItem value="router">Routeurs</SelectItem>
+              <SelectItem value="pc">PC</SelectItem>
+              <SelectItem value="other">Autres</SelectItem>
             </SelectContent>
           </Select>
         </div>

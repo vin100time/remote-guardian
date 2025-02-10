@@ -1,12 +1,32 @@
-
 import { useParams, Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ExternalLink, Edit2Icon, Trash2Icon } from "lucide-react";
+import { ArrowLeft, ExternalLink, Edit2Icon, Trash2Icon, CameraIcon, VideoIcon, NetworkIcon, ServerIcon, WifiIcon, RouterIcon, MonitorIcon, DeviceIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const EquipmentDetail = () => {
   const { id } = useParams();
+
+  const getIcon = (type: string) => {
+    switch(type) {
+      case 'camera':
+        return <CameraIcon className="w-5 h-5" />;
+      case 'video-recorder':
+        return <VideoIcon className="w-5 h-5" />;
+      case 'switch':
+        return <NetworkIcon className="w-5 h-5" />;
+      case 'server':
+        return <ServerIcon className="w-5 h-5" />;
+      case 'antenna':
+        return <WifiIcon className="w-5 h-5" />;
+      case 'router':
+        return <RouterIcon className="w-5 h-5" />;
+      case 'pc':
+        return <MonitorIcon className="w-5 h-5" />;
+      default:
+        return <DeviceIcon className="w-5 h-5" />;
+    }
+  };
 
   // Simulons un équipement pour l'exemple
   const equipment = {
