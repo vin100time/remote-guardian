@@ -1,7 +1,8 @@
+
 import { useParams, Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ExternalLink, Edit2Icon, Trash2Icon, CameraIcon, VideoIcon, NetworkIcon, ServerIcon, WifiIcon, RouterIcon, MonitorIcon, DeviceIcon } from "lucide-react";
+import { ArrowLeft, ExternalLink, Edit2Icon, Trash2Icon, CameraIcon, VideoIcon, NetworkIcon, ServerIcon, WifiIcon, RouterIcon, MonitorIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const EquipmentDetail = () => {
@@ -24,7 +25,7 @@ const EquipmentDetail = () => {
       case 'pc':
         return <MonitorIcon className="w-5 h-5" />;
       default:
-        return <DeviceIcon className="w-5 h-5" />;
+        return <ServerIcon className="w-5 h-5" />; // Changed from DeviceIcon to ServerIcon
     }
   };
 

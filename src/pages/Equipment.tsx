@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, PlusCircle, RefreshCcw, Edit2Icon, Trash2Icon, Search, Filter, ArrowRight, VideoIcon, WifiIcon, RouterIcon, MonitorIcon, DeviceIcon } from "lucide-react";
+import { ServerIcon, CameraIcon, NetworkIcon, VideoIcon, WifiIcon, RouterIcon, MonitorIcon, PlusCircle, RefreshCcw, Trash2Icon, Search, Filter, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Equipment = () => {
@@ -88,7 +89,7 @@ const Equipment = () => {
       case 'pc':
         return <MonitorIcon className="w-5 h-5" />;
       default:
-        return <DeviceIcon className="w-5 h-5" />;
+        return <ServerIcon className="w-5 h-5" />; // Changed from DeviceIcon to ServerIcon
     }
   };
 

@@ -1,3 +1,4 @@
+
 import { useParams, Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, Search, Filter, ServerIcon, PrinterIcon, CameraIcon, NetworkIcon, ArrowRight, VideoIcon, WifiIcon, RouterIcon, MonitorIcon, DeviceIcon } from "lucide-react";
+import { ArrowLeft, Search, Filter, ServerIcon, CameraIcon, NetworkIcon, VideoIcon, WifiIcon, RouterIcon, MonitorIcon, ArrowRight } from "lucide-react";
 
 const SiteEquipment = () => {
   const { siteId } = useParams();
@@ -42,7 +43,7 @@ const SiteEquipment = () => {
       case 'pc':
         return <MonitorIcon className="w-5 h-5" />;
       default:
-        return <DeviceIcon className="w-5 h-5" />;
+        return <ServerIcon className="w-5 h-5" />; // Changed from DeviceIcon to ServerIcon
     }
   };
 
