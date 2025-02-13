@@ -28,10 +28,15 @@ const SitesMap = () => {
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: 'https://demotiles.maplibre.org/style.json',
+      style: 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
       center: [2.3522, 46.8566], // Centre de la France
-      zoom: 5
+      zoom: 5,
+      pitch: 0, // Angle de vue à plat
+      bearing: 0 // Orientation de la carte
     });
+
+    // Ajout des contrôles de navigation
+    map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
     const addMarkers = () => {
       sites.forEach((site) => {
@@ -43,23 +48,33 @@ const SitesMap = () => {
         
         el.style.cssText = `
           background-color: ${color};
-          width: 20px;
-          height: 20px;
+          width: 16px;
+          height: 16px;
           border-radius: 50%;
-          border: 2px solid white;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+          border: 3px solid white;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.3);
           cursor: pointer;
         `;
 
-        // Ajout du popup
-        const popup = new maplibregl.Popup({ offset: 25 }).setHTML(`
-          <div class="p-2">
-            <h3 class="font-semibold">${site.name}</h3>
-            <p class="text-sm text-gray-600">
-              Statut: ${
-                site.status === 'online' ? 'En ligne' :
-                site.status === 'offline' ? 'Hors ligne' : 'Attention'
-              }
+        // Ajout du popup avec un style amélioré
+        const popup = new maplibregl.Popup({ 
+          offset: 25,
+          closeButton: false,
+          className: 'custom-popup'
+        }).setHTML(`
+          <div class="p-3 bg-white rounded-lg shadow-lg">
+            <h3 class="font-semibold text-gray-800">${site.name}</h3>
+            <p class="text-sm text-gray-600 mt-1">
+              Statut: 
+              <span class="font-medium ${
+                site.status === 'online' ? 'text-green-600' :
+                site.status === 'offline' ? 'text-red-600' : 'text-amber-600'
+              }">
+                ${
+                  site.status === 'online' ? 'En ligne' :
+                  site.status === 'offline' ? 'Hors ligne' : 'Attention'
+                }
+              </span>
             </p>
           </div>
         `);
@@ -80,7 +95,7 @@ const SitesMap = () => {
   }, []);
 
   return (
-    <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
+    <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem', overflow: 'hidden' }}>
       <div ref={mapContainer} style={{ height: '100%', width: '100%' }} />
     </div>
   );
