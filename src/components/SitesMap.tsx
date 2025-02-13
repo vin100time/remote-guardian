@@ -2,17 +2,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { useEffect } from 'react';
-
-// Fix for default marker icons in Leaflet
-useEffect(() => {
-  delete (L.Icon.Default.prototype as any)._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: '/marker-icon-2x.png',
-    iconUrl: '/marker-icon.png',
-    shadowUrl: '/marker-shadow.png',
-  });
-}, []);
 
 interface Site {
   name: string;
@@ -29,6 +18,13 @@ const SitesMap = () => {
     { name: "Site Lille Centre", coordinates: [50.6292, 3.0573], status: 'online' },
     { name: "Site Nantes Est", coordinates: [47.2184, -1.5534], status: 'warning' }
   ];
+
+  // Configuration des icônes par défaut de Leaflet
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'marker-icon-2x.png',
+    iconUrl: 'marker-icon.png',
+    shadowUrl: 'marker-shadow.png',
+  });
 
   const getMarkerIcon = (status: Site['status']) => {
     const markerHtmlStyles = `
@@ -55,19 +51,19 @@ const SitesMap = () => {
 
   return (
     <MapContainer
-      center={[46.8566, 2.3522]} // Centre de la France
+      style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}
+      center={[46.8566, 2.3522] as L.LatLngExpression} // Centre de la France
       zoom={6}
-      className="w-full h-[400px] rounded-lg"
       scrollWheelZoom={false}
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       {sites.map((site, index) => (
         <Marker 
           key={index}
-          position={site.coordinates}
+          position={site.coordinates as L.LatLngExpression}
           icon={getMarkerIcon(site.status)}
         >
           <Popup>
