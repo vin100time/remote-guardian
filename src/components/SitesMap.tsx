@@ -19,13 +19,6 @@ const SitesMap = () => {
     { name: "Site Nantes Est", coordinates: [47.2184, -1.5534], status: 'warning' }
   ];
 
-  // Configuration des icônes par défaut de Leaflet
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: 'marker-icon-2x.png',
-    iconUrl: 'marker-icon.png',
-    shadowUrl: 'marker-shadow.png',
-  });
-
   const getMarkerIcon = (status: Site['status']) => {
     const markerHtmlStyles = `
       background-color: ${
@@ -50,36 +43,37 @@ const SitesMap = () => {
   };
 
   return (
-    <MapContainer
-      style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}
-      center={[46.8566, 2.3522] as L.LatLngExpression} // Centre de la France
-      zoom={6}
-      scrollWheelZoom={false}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {sites.map((site, index) => (
-        <Marker 
-          key={index}
-          position={site.coordinates as L.LatLngExpression}
-          icon={getMarkerIcon(site.status)}
-        >
-          <Popup>
-            <div className="p-2">
-              <h3 className="font-semibold">{site.name}</h3>
-              <p className="text-sm text-gray-600">
-                Statut: {
-                  site.status === 'online' ? 'En ligne' :
-                  site.status === 'offline' ? 'Hors ligne' : 'Attention'
-                }
-              </p>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+    <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
+      <MapContainer
+        center={[46.8566, 2.3522]}
+        zoom={6}
+        style={{ height: '100%', width: '100%' }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {sites.map((site, index) => (
+          <Marker 
+            key={index}
+            position={site.coordinates}
+            icon={getMarkerIcon(site.status)}
+          >
+            <Popup>
+              <div className="p-2">
+                <h3 className="font-semibold">{site.name}</h3>
+                <p className="text-sm text-gray-600">
+                  Statut: {
+                    site.status === 'online' ? 'En ligne' :
+                    site.status === 'offline' ? 'Hors ligne' : 'Attention'
+                  }
+                </p>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 };
 
