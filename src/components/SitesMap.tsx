@@ -2,6 +2,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { useEffect } from 'react';
 
 interface Site {
   name: string;
@@ -18,6 +19,16 @@ const SitesMap = () => {
     { name: "Site Lille Centre", coordinates: [50.6292, 3.0573], status: 'online' },
     { name: "Site Nantes Est", coordinates: [47.2184, -1.5534], status: 'warning' }
   ];
+
+  useEffect(() => {
+    // Fix for the default icon markers
+    delete (L.Icon.Default.prototype as any)._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+      iconUrl: require('leaflet/dist/images/marker-icon.png'),
+      shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+    });
+  }, []);
 
   const getMarkerIcon = (status: Site['status']) => {
     const markerHtmlStyles = `
@@ -42,12 +53,15 @@ const SitesMap = () => {
     });
   };
 
+  const defaultCenter: L.LatLngExpression = [46.8566, 2.3522];
+
   return (
     <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
       <MapContainer
-        center={[46.8566, 2.3522]}
+        center={defaultCenter}
         zoom={6}
         style={{ height: '100%', width: '100%' }}
+        scrollWheelZoom={false}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -56,7 +70,7 @@ const SitesMap = () => {
         {sites.map((site, index) => (
           <Marker 
             key={index}
-            position={site.coordinates}
+            position={site.coordinates as L.LatLngExpression}
             icon={getMarkerIcon(site.status)}
           >
             <Popup>
