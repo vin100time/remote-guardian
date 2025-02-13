@@ -13,6 +13,8 @@ interface Site {
   status: 'online' | 'offline' | 'warning';
 }
 
+const DEFAULT_CENTER: [number, number] = [46.8566, 2.3522];
+
 const SitesMap = () => {
   const sites: Site[] = [
     { name: "Site Paris Centre", coordinates: [48.8566, 2.3522], status: 'online' },
@@ -56,36 +58,42 @@ const SitesMap = () => {
     });
   };
 
+  const MapContent = () => (
+    <>
+      <TileLayer 
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      {sites.map((site, index) => (
+        <Marker 
+          key={index}
+          position={site.coordinates}
+          icon={getMarkerIcon(site.status)}
+        >
+          <Popup>
+            <div className="p-2">
+              <h3 className="font-semibold">{site.name}</h3>
+              <p className="text-sm text-gray-600">
+                Statut: {
+                  site.status === 'online' ? 'En ligne' :
+                  site.status === 'offline' ? 'Hors ligne' : 'Attention'
+                }
+              </p>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+    </>
+  );
+
   return (
     <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
       <MapContainer 
-        center={[46.8566, 2.3522]} 
+        center={DEFAULT_CENTER}
         zoom={6} 
         style={{ height: '100%', width: '100%' }}
       >
-        <TileLayer 
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attributionControl={true}
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {sites.map((site, index) => (
-          <Marker 
-            key={index}
-            position={site.coordinates}
-          >
-            <Popup>
-              <div className="p-2">
-                <h3 className="font-semibold">{site.name}</h3>
-                <p className="text-sm text-gray-600">
-                  Statut: {
-                    site.status === 'online' ? 'En ligne' :
-                    site.status === 'offline' ? 'Hors ligne' : 'Attention'
-                  }
-                </p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+        <MapContent />
       </MapContainer>
     </div>
   );
