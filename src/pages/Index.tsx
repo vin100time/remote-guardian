@@ -1,19 +1,10 @@
+
 import { Card } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 import { cn } from "@/lib/utils";
+import SitesMap from "@/components/SitesMap";
 
 const Index = () => {
-  // Données pour le graphique linéaire
-  const connectivityData = [
-    { name: 'jeu.', online: 10, offline: 2 },
-    { name: 'ven.', online: 11, offline: 1 },
-    { name: 'sam.', online: 10, offline: 2 },
-    { name: 'dim.', online: 9, offline: 3 },
-    { name: 'lun.', online: 10, offline: 2 },
-    { name: 'mar.', online: 10, offline: 2 },
-    { name: 'mer.', online: 9, offline: 3 },
-  ];
-
   // Données pour le graphique circulaire
   const equipmentData = [
     { name: 'Caméras', value: 45, color: '#2196F3' },
@@ -109,34 +100,14 @@ const Index = () => {
 
       <div className="grid grid-cols-2 gap-4">
         <Card className="p-4 bg-white">
-          <h2 className="text-lg font-semibold mb-4">Historique de connectivité</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={connectivityData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line 
-                type="monotone" 
-                dataKey="online" 
-                stroke="#4CAF50" 
-                name="Sites en ligne"
-                strokeWidth={2}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="offline" 
-                stroke="#F44336" 
-                name="Sites hors ligne"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <h2 className="text-lg font-semibold mb-4">Répartition géographique des sites</h2>
+          <SitesMap />
         </Card>
 
         <Card className="p-4 bg-white">
           <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
+          <div className="h-[400px] flex items-center justify-center">
+            <PieChart width={400} height={300}>
               <Pie
                 data={equipmentData}
                 innerRadius={60}
@@ -149,7 +120,7 @@ const Index = () => {
                 ))}
               </Pie>
             </PieChart>
-          </ResponsiveContainer>
+          </div>
         </Card>
       </div>
 
