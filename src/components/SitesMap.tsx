@@ -1,9 +1,18 @@
 
-import { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import { useEffect } from 'react';
+
+// Fix for default marker icons in Leaflet
+useEffect(() => {
+  delete (L.Icon.Default.prototype as any)._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: '/marker-icon-2x.png',
+    iconUrl: '/marker-icon.png',
+    shadowUrl: '/marker-shadow.png',
+  });
+}, []);
 
 interface Site {
   name: string;
@@ -12,113 +21,69 @@ interface Site {
 }
 
 const SitesMap = () => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxKey, setMapboxKey] = useState('');
-  const [isMapInitialized, setIsMapInitialized] = useState(false);
-
   const sites: Site[] = [
-    { name: "Site Paris Centre", coordinates: [2.3522, 48.8566], status: 'online' },
-    { name: "Site Lyon Sud", coordinates: [4.8357, 45.7640], status: 'online' },
-    { name: "Site Marseille Port", coordinates: [5.3698, 43.2965], status: 'offline' },
-    { name: "Site Bordeaux Nord", coordinates: [0.5792, 44.8378], status: 'online' },
-    { name: "Site Lille Centre", coordinates: [3.0573, 50.6292], status: 'online' },
-    { name: "Site Nantes Est", coordinates: [-1.5534, 47.2184], status: 'warning' }
+    { name: "Site Paris Centre", coordinates: [48.8566, 2.3522], status: 'online' },
+    { name: "Site Lyon Sud", coordinates: [45.7640, 4.8357], status: 'online' },
+    { name: "Site Marseille Port", coordinates: [43.2965, 5.3698], status: 'offline' },
+    { name: "Site Bordeaux Nord", coordinates: [44.8378, 0.5792], status: 'online' },
+    { name: "Site Lille Centre", coordinates: [50.6292, 3.0573], status: 'online' },
+    { name: "Site Nantes Est", coordinates: [47.2184, -1.5534], status: 'warning' }
   ];
 
-  const initializeMap = () => {
-    if (!mapContainer.current || !mapboxKey) return;
+  const getMarkerIcon = (status: Site['status']) => {
+    const markerHtmlStyles = `
+      background-color: ${
+        status === 'online' ? '#22c55e' :
+        status === 'offline' ? '#ef4444' : '#f59e0b'
+      };
+      width: 2rem;
+      height: 2rem;
+      display: block;
+      position: relative;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    `;
 
-    // Initialisation de la carte
-    mapboxgl.accessToken = mapboxKey;
-    
-    if (map.current) {
-      map.current.remove();
-    }
-
-    try {
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v12', // Changed to streets style for better visibility
-        center: [2.3522, 46.8566], // Centre de la France
-        zoom: 5
-      });
-
-      map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-      // Ajout des marqueurs pour chaque site
-      sites.forEach(site => {
-        const marker = document.createElement('div');
-        marker.className = 'site-marker';
-        marker.style.width = '20px';
-        marker.style.height = '20px';
-        marker.style.borderRadius = '50%';
-        marker.style.border = '2px solid white';
-        marker.style.backgroundColor = 
-          site.status === 'online' ? '#22c55e' :
-          site.status === 'offline' ? '#ef4444' : '#f59e0b';
-        marker.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
-
-        const popup = new mapboxgl.Popup({ offset: 25 })
-          .setHTML(`
-            <div class="p-2">
-              <h3 class="font-semibold">${site.name}</h3>
-              <p class="text-sm text-gray-600">Statut: ${
-                site.status === 'online' ? 'En ligne' :
-                site.status === 'offline' ? 'Hors ligne' : 'Attention'
-              }</p>
-            </div>
-          `);
-
-        new mapboxgl.Marker(marker)
-          .setLngLat(site.coordinates)
-          .setPopup(popup)
-          .addTo(map.current);
-      });
-
-      setIsMapInitialized(true);
-    } catch (error) {
-      console.error("Erreur lors de l'initialisation de la carte:", error);
-    }
+    return L.divIcon({
+      className: 'custom-pin',
+      iconAnchor: [12, 12],
+      popupAnchor: [0, -12],
+      html: `<span style="${markerHtmlStyles}" />`
+    });
   };
 
-  useEffect(() => {
-    if (mapboxKey) {
-      initializeMap();
-    }
-
-    return () => {
-      if (map.current) {
-        map.current.remove();
-      }
-    };
-  }, [mapboxKey]);
-
-  if (!isMapInitialized) {
-    return (
-      <div className="p-4 space-y-4">
-        <div className="text-sm text-muted-foreground mb-2">
-          Pour afficher la carte, veuillez entrer votre clé API Mapbox publique ci-dessous. 
-          Vous pouvez l'obtenir sur <a href="https://www.mapbox.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">mapbox.com</a>
-        </div>
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            placeholder="Entrez votre clé API Mapbox publique"
-            value={mapboxKey}
-            onChange={(e) => setMapboxKey(e.target.value)}
-            className="flex-1"
-          />
-          <Button onClick={initializeMap}>Initialiser la carte</Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
-      <div ref={mapContainer} className="absolute inset-0" />
-    </div>
+    <MapContainer
+      center={[46.8566, 2.3522]} // Centre de la France
+      zoom={6}
+      className="w-full h-[400px] rounded-lg"
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {sites.map((site, index) => (
+        <Marker 
+          key={index}
+          position={site.coordinates}
+          icon={getMarkerIcon(site.status)}
+        >
+          <Popup>
+            <div className="p-2">
+              <h3 className="font-semibold">{site.name}</h3>
+              <p className="text-sm text-gray-600">
+                Statut: {
+                  site.status === 'online' ? 'En ligne' :
+                  site.status === 'offline' ? 'Hors ligne' : 'Attention'
+                }
+              </p>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+    </MapContainer>
   );
 };
 
