@@ -56,25 +56,22 @@ const SitesMap = () => {
     });
   };
 
-  const defaultCenter: L.LatLngExpression = [46.8566, 2.3522];
-
   return (
     <div style={{ height: '400px', width: '100%', borderRadius: '0.5rem' }}>
-      <MapContainer
-        center={defaultCenter}
-        zoom={6}
+      <MapContainer 
+        center={[46.8566, 2.3522]} 
+        zoom={6} 
         style={{ height: '100%', width: '100%' }}
-        scrollWheelZoom={false}
       >
-        <TileLayer
+        <TileLayer 
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attributionControl={true}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {sites.map((site, index) => (
           <Marker 
             key={index}
-            position={site.coordinates as L.LatLngExpression}
-            icon={getMarkerIcon(site.status)}
+            position={site.coordinates}
           >
             <Popup>
               <div className="p-2">
