@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Layout from "./components/Layout";
+import Landing from "./pages/Landing";
 import Index from "./pages/Index";
 import Sites from "./pages/Sites";
 import Equipment from "./pages/Equipment";
@@ -19,9 +20,10 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Index />} />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/dashboard" element={<Index />} />
           <Route path="/sites" element={<Sites />} />
           <Route path="/sites/:siteId/equipment" element={<SiteEquipment />} />
           <Route path="/equipment/:id" element={<EquipmentDetail />} />
@@ -30,8 +32,8 @@ const App = () => (
           <Route path="/configuration" element={<Settings />} />
           <Route path="/compte" element={<Account />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </BrowserRouter>
     <Toaster />
     <Sonner />
