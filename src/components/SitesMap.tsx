@@ -28,11 +28,29 @@ const SitesMap = () => {
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+      style: {
+        version: 8,
+        sources: {
+          'osm': {
+            type: 'raster',
+            tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            tileSize: 256,
+            attribution: '&copy; OpenStreetMap Contributors',
+            maxzoom: 19
+          }
+        },
+        layers: [{
+          id: 'osm',
+          type: 'raster',
+          source: 'osm',
+          minzoom: 0,
+          maxzoom: 19
+        }]
+      },
       center: [2.3522, 46.8566], // Centre de la France
       zoom: 5,
-      pitch: 0, // Angle de vue à plat
-      bearing: 0 // Orientation de la carte
+      pitch: 0,
+      bearing: 0
     });
 
     // Ajout des contrôles de navigation
