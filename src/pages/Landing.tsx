@@ -17,7 +17,7 @@ const Landing = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Shield className="h-8 w-8 text-purple-600" />
-              <span className="text-xl font-bold">Remote Guardian</span>
+              <span className="text-xl font-bold">Vigile OS</span>
             </div>
             <div className="flex items-center gap-4">
               <Button 
@@ -45,7 +45,7 @@ const Landing = () => {
               Supervision à distance de vos sites en temps réel
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-              Remote Guardian vous permet de surveiller tous vos sites et équipements depuis une interface unique, 
+              Vigile OS vous permet de surveiller tous vos sites et équipements depuis une interface unique, 
               avec des alertes en temps réel et des analyses détaillées.
             </p>
             <div className="space-y-4">
