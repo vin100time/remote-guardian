@@ -85,7 +85,7 @@ const Landing = () => {
 
               {/* Login/Signup Form */}
               <div className="flex justify-center lg:justify-end">
-                <Card className="p-6 shadow-2xl bg-white/80 backdrop-blur-lg border-0 rounded-2xl transform hover:scale-[1.01] transition-all duration-300 animate-fade-in [animation-delay:400ms] w-full max-w-md">
+                <Card className="p-6 shadow-2xl bg-white border-0 rounded-2xl transform hover:scale-[1.01] transition-all duration-300 animate-fade-in [animation-delay:400ms] w-full max-w-md">
                   <div className="mb-6">
                     <h2 className="text-2xl font-bold mb-2 text-[#0e3175] tracking-tight">
                       {isLogin ? "Connexion" : "Créer un compte"}
@@ -105,7 +105,7 @@ const Landing = () => {
                           id="company" 
                           type="text" 
                           placeholder="Global Secure SARL"
-                          className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
+                          className="h-10 px-4 bg-white text-sm focus:ring-2 focus:ring-[#0e3175] focus:ring-offset-0"
                         />
                       </div>
                     )}
@@ -116,7 +116,7 @@ const Landing = () => {
                         id="email" 
                         type="email" 
                         placeholder="contact@entreprise.fr"
-                        className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
+                        className="h-10 px-4 bg-white text-sm focus:ring-2 focus:ring-[#0e3175] focus:ring-offset-0"
                       />
                     </div>
 
@@ -125,7 +125,7 @@ const Landing = () => {
                       <Input 
                         id="password" 
                         type="password"
-                        className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
+                        className="h-10 px-4 bg-white text-sm focus:ring-2 focus:ring-[#0e3175] focus:ring-offset-0"
                       />
                     </div>
 
@@ -135,7 +135,7 @@ const Landing = () => {
                         <Input 
                           id="confirmPassword" 
                           type="password"
-                          className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
+                          className="h-10 px-4 bg-white text-sm focus:ring-2 focus:ring-[#0e3175] focus:ring-offset-0"
                         />
                       </div>
                     )}
