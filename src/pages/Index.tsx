@@ -116,10 +116,10 @@ const Index = () => {
           <SitesMap />
         </Card>
 
-        <Card className="p-4 bg-white h-full">
+        <Card className="p-4 bg-white">
           <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
-          <div className="w-full h-[calc(100%-2rem)]">
-            <ResponsiveContainer width="100%" height="100%">
+          <div style={{ width: '100%', height: '300px' }}>
+            <ResponsiveContainer>
               <BarChart
                 data={equipmentData}
                 margin={{
