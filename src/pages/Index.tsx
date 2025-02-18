@@ -7,11 +7,12 @@ import SitesMap from "@/components/SitesMap";
 const Index = () => {
   // Données pour le graphique circulaire
   const equipmentData = [
-    { name: 'Caméras', value: 40, color: '#2196F3' },
+    { name: 'Caméras', value: 35, color: '#2196F3' },
     { name: 'Routeurs', value: 15, color: '#FFA726' },
     { name: 'Switches', value: 20, color: '#7E69AB' },
-    { name: 'Serveurs', value: 15, color: '#78909C' },
-    { name: 'Points d\'accès', value: 10, color: '#66BB6A' }
+    { name: 'Serveurs', value: 10, color: '#78909C' },
+    { name: 'Points d\'accès', value: 10, color: '#66BB6A' },
+    { name: 'Autres', value: 10, color: '#8E9196' }
   ];
 
   const stats = [
