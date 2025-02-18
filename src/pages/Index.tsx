@@ -127,8 +127,9 @@ const Index = () => {
                 dataKey="value"
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 className="animate-[spin_1s_ease-in-out]"
-                labelLine={true}
+                labelLine={false}
                 fontSize={16}
+                labelStyle={{ fill: '#000000', textShadow: 'none' }}
               >
                 {equipmentData.map((entry, index) => (
                   <Cell 
