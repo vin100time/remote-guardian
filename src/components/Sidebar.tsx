@@ -1,12 +1,15 @@
 
 import { Menu, Home, Users, Monitor, Bell, Settings, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-export const Sidebar = () => {
+interface SidebarProps {
+  isCollapsed: boolean;
+  onCollapse: (collapsed: boolean) => void;
+}
+
+export const Sidebar = ({ isCollapsed, onCollapse }: SidebarProps) => {
   const location = useLocation();
-  const [isCollapsed, setIsCollapsed] = useState(false);
   
   const links = [
     { name: "Tableau de bord", icon: Home, path: "/dashboard" },
@@ -19,12 +22,12 @@ export const Sidebar = () => {
 
   return (
     <div className={cn(
-      "fixed left-0 top-0 h-screen bg-white border-r border-border/50 transition-all duration-300",
+      "fixed left-0 top-0 h-screen bg-white border-r border-border/50 transition-all duration-300 z-50",
       isCollapsed ? "w-20" : "w-64"
     )}>
       <div className="flex items-center gap-3 p-4 border-b border-border/50">
         <button 
-          onClick={() => setIsCollapsed(!isCollapsed)} 
+          onClick={() => onCollapse(!isCollapsed)} 
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <Menu size={20} />
