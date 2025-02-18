@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell } from 'recharts';
 import { cn } from "@/lib/utils";
@@ -125,11 +124,10 @@ const Index = () => {
                 innerRadius={60}
                 outerRadius={120}
                 dataKey="value"
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                label={(entry) => `${entry.name} ${(entry.percent * 100).toFixed(0)}%`}
                 className="animate-[spin_1s_ease-in-out]"
                 labelLine={false}
-                fontSize={16}
-                style={{ fontWeight: 500 }}
+                fill="#000000"
               >
                 {equipmentData.map((entry, index) => (
                   <Cell 
