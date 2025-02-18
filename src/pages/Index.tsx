@@ -1,17 +1,17 @@
 import { Card } from "@/components/ui/card";
-import { PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { cn } from "@/lib/utils";
 import SitesMap from "@/components/SitesMap";
 import { UserIcon } from "lucide-react";
 
 const Index = () => {
   const equipmentData = [
-    { name: 'Caméras', value: 35, color: '#2196F3', displayName: 'Caméras 35%' },
-    { name: 'Routeurs', value: 15, color: '#FFA726', displayName: 'Routeurs 15%' },
-    { name: 'Switches', value: 20, color: '#7E69AB', displayName: 'Switches 20%' },
-    { name: 'Serveurs', value: 10, color: '#78909C', displayName: 'Serveurs 10%' },
-    { name: 'Points d\'accès', value: 10, color: '#66BB6A', displayName: 'Points d\'accès 10%' },
-    { name: 'Autres', value: 10, color: '#8E9196', displayName: 'Autres 10%' }
+    { name: 'Caméras', value: 35, color: '#2196F3' },
+    { name: 'Routeurs', value: 15, color: '#FFA726' },
+    { name: 'Switches', value: 20, color: '#7E69AB' },
+    { name: 'Serveurs', value: 10, color: '#78909C' },
+    { name: 'Points d\'accès', value: 10, color: '#66BB6A' },
+    { name: 'Autres', value: 10, color: '#8E9196' }
   ];
 
   const stats = [
@@ -117,27 +117,44 @@ const Index = () => {
 
         <Card className="p-4 bg-white h-full">
           <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
-          <div className="w-full h-[calc(100%-2rem)] flex items-center justify-center">
-            <PieChart width={500} height={400}>
-              <Pie
+          <div className="w-full h-[calc(100%-2rem)]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
                 data={equipmentData}
-                innerRadius={80}
-                outerRadius={160}
-                dataKey="value"
-                label={(entry) => entry.displayName}
-                className="animate-[spin_1s_ease-in-out]"
-                labelLine={false}
-                fill="#000000"
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 60
+                }}
               >
-                {equipmentData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.color}
-                    className="transition-all duration-300 hover:opacity-80"
-                  />
-                ))}
-              </Pie>
-            </PieChart>
+                <XAxis 
+                  dataKey="name"
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
+                  interval={0}
+                />
+                <YAxis />
+                <Tooltip />
+                <Bar 
+                  dataKey="value" 
+                  fill="#2196F3"
+                  label={{ 
+                    position: 'top',
+                    content: ({ value }) => `${value}%`
+                  }}
+                >
+                  {equipmentData.map((entry, index) => (
+                    <Bar
+                      key={`cell-${index}`}
+                      fill={entry.color}
+                      className="transition-all duration-300 hover:opacity-80"
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </Card>
       </div>
