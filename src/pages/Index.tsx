@@ -2,18 +2,9 @@ import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell } from 'recharts';
 import { cn } from "@/lib/utils";
 import SitesMap from "@/components/SitesMap";
-import { useEffect, useState } from "react";
+import { UserIcon } from "lucide-react";
 
 const Index = () => {
-  const [companyLogo, setCompanyLogo] = useState<string>("/placeholder.svg");
-
-  useEffect(() => {
-    const savedLogo = localStorage.getItem('companyLogo');
-    if (savedLogo) {
-      setCompanyLogo(savedLogo);
-    }
-  }, []);
-
   const equipmentData = [
     { name: 'Caméras', value: 35, color: '#2196F3' },
     { name: 'Routeurs', value: 15, color: '#FFA726' },
@@ -88,12 +79,8 @@ const Index = () => {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-sm">Global Secure SARL</span>
-          <div className="w-8 h-8 rounded-full overflow-hidden">
-            <img
-              src={companyLogo}
-              alt="Company Logo"
-              className="w-full h-full object-cover"
-            />
+          <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+            <UserIcon className="w-4 h-4 text-muted-foreground" />
           </div>
         </div>
       </div>
