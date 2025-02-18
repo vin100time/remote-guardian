@@ -10,7 +10,6 @@ import { CreditCard, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
 const Settings = () => {
-  const [darkMode, setDarkMode] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<"card" | "paypal" | null>(null);
   const [siteCount, setSiteCount] = useState(3);
   const [cardInfo, setCardInfo] = useState({
@@ -171,20 +170,6 @@ const Settings = () => {
               <Button onClick={handlePayment} className="w-full">
                 Payer {totalTTC.toFixed(2)}€
               </Button>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="p-6 glass">
-          <h2 className="text-lg font-semibold mb-4">Apparence</h2>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="darkMode">Mode sombre</Label>
-              <Switch
-                id="darkMode"
-                checked={darkMode}
-                onCheckedChange={setDarkMode}
-              />
             </div>
           </div>
         </Card>
