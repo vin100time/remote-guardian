@@ -13,8 +13,8 @@ const Landing = () => {
     <div className="min-h-screen bg-gradient-to-b from-[#0e3175]/5 via-white to-[#0e3175]/5">
       {/* Navigation */}
       <nav className="border-b bg-white/50 backdrop-blur-sm sticky top-0 z-50 animate-fade-in">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1400px]">
+          <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               <span className="text-xl sm:text-2xl font-bold text-[#0e3175] tracking-tight hover:scale-105 transition-transform duration-300">Vigileos.</span>
             </div>
@@ -39,9 +39,9 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-8 lg:py-16">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-6 animate-fade-in [animation-delay:200ms]">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16 max-w-[1400px]">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="space-y-6 lg:space-y-8 animate-fade-in [animation-delay:200ms] max-w-xl">
             <div className="space-y-4">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-gray-900 tracking-tight">
                 Supervision à distance de vos sites en <span className="text-[#0e3175] animate-pulse">temps réel</span>
@@ -83,97 +83,99 @@ const Landing = () => {
           </div>
 
           {/* Login/Signup Form */}
-          <Card className="p-6 shadow-2xl bg-white/80 backdrop-blur-lg border-0 rounded-2xl transform hover:scale-[1.01] transition-all duration-300 animate-fade-in [animation-delay:400ms] w-full max-w-md mx-auto">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2 text-[#0e3175] tracking-tight">
-                {isLogin ? "Connexion" : "Créer un compte"}
-              </h2>
-              <p className="text-gray-600 text-sm">
-                {isLogin 
-                  ? "Accédez à votre tableau de bord" 
-                  : "Commencez à superviser vos sites"}
-              </p>
-            </div>
+          <div className="flex justify-center lg:justify-end">
+            <Card className="p-6 shadow-2xl bg-white/80 backdrop-blur-lg border-0 rounded-2xl transform hover:scale-[1.01] transition-all duration-300 animate-fade-in [animation-delay:400ms] w-full max-w-md">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold mb-2 text-[#0e3175] tracking-tight">
+                  {isLogin ? "Connexion" : "Créer un compte"}
+                </h2>
+                <p className="text-gray-600 text-sm">
+                  {isLogin 
+                    ? "Accédez à votre tableau de bord" 
+                    : "Commencez à superviser vos sites"}
+                </p>
+              </div>
 
-            <form className="space-y-4">
-              {!isLogin && (
-                <div className="space-y-2 animate-fade-in">
-                  <Label htmlFor="company" className="text-sm font-medium">Nom de l'entreprise</Label>
+              <form className="space-y-4">
+                {!isLogin && (
+                  <div className="space-y-2 animate-fade-in">
+                    <Label htmlFor="company" className="text-sm font-medium">Nom de l'entreprise</Label>
+                    <Input 
+                      id="company" 
+                      type="text" 
+                      placeholder="Global Secure SARL"
+                      className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
+                    />
+                  </div>
+                )}
+                
+                <div className="space-y-2 animate-fade-in [animation-delay:200ms]">
+                  <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                   <Input 
-                    id="company" 
-                    type="text" 
-                    placeholder="Global Secure SARL"
+                    id="email" 
+                    type="email" 
+                    placeholder="contact@entreprise.fr"
                     className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
                   />
                 </div>
-              )}
-              
-              <div className="space-y-2 animate-fade-in [animation-delay:200ms]">
-                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="contact@entreprise.fr"
-                  className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
-                />
-              </div>
 
-              <div className="space-y-2 animate-fade-in [animation-delay:400ms]">
-                <Label htmlFor="password" className="text-sm font-medium">Mot de passe</Label>
-                <Input 
-                  id="password" 
-                  type="password"
-                  className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
-                />
-              </div>
-
-              {!isLogin && (
-                <div className="space-y-2 animate-fade-in [animation-delay:600ms]">
-                  <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirmer le mot de passe</Label>
+                <div className="space-y-2 animate-fade-in [animation-delay:400ms]">
+                  <Label htmlFor="password" className="text-sm font-medium">Mot de passe</Label>
                   <Input 
-                    id="confirmPassword" 
+                    id="password" 
                     type="password"
                     className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
                   />
                 </div>
-              )}
 
-              <Button 
-                className="w-full bg-[#0e3175] hover:bg-[#0e3175]/90 h-10 text-sm font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 animate-fade-in [animation-delay:800ms]"
-              >
-                {isLogin ? (
-                  <User className="mr-2 h-4 w-4" />
-                ) : (
-                  <Lock className="mr-2 h-4 w-4" />
+                {!isLogin && (
+                  <div className="space-y-2 animate-fade-in [animation-delay:600ms]">
+                    <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirmer le mot de passe</Label>
+                    <Input 
+                      id="confirmPassword" 
+                      type="password"
+                      className="h-10 px-4 bg-white/90 hover:scale-[1.01] transition-transform text-sm"
+                    />
+                  </div>
                 )}
-                {isLogin ? "Se connecter" : "Créer un compte"}
-              </Button>
-            </form>
 
-            <p className="text-center text-xs text-gray-600 mt-4 animate-fade-in [animation-delay:1000ms]">
-              {isLogin ? (
-                <>
-                  Pas encore de compte ?{" "}
-                  <button
-                    onClick={() => setIsLogin(false)}
-                    className="text-[#0e3175] font-medium hover:underline transition-all hover:-translate-y-0.5"
-                  >
-                    S'inscrire
-                  </button>
-                </>
-              ) : (
-                <>
-                  Déjà un compte ?{" "}
-                  <button
-                    onClick={() => setIsLogin(true)}
-                    className="text-[#0e3175] font-medium hover:underline transition-all hover:-translate-y-0.5"
-                  >
-                    Se connecter
-                  </button>
-                </>
-              )}
-            </p>
-          </Card>
+                <Button 
+                  className="w-full bg-[#0e3175] hover:bg-[#0e3175]/90 h-10 text-sm font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 animate-fade-in [animation-delay:800ms]"
+                >
+                  {isLogin ? (
+                    <User className="mr-2 h-4 w-4" />
+                  ) : (
+                    <Lock className="mr-2 h-4 w-4" />
+                  )}
+                  {isLogin ? "Se connecter" : "Créer un compte"}
+                </Button>
+              </form>
+
+              <p className="text-center text-xs text-gray-600 mt-4 animate-fade-in [animation-delay:1000ms]">
+                {isLogin ? (
+                  <>
+                    Pas encore de compte ?{" "}
+                    <button
+                      onClick={() => setIsLogin(false)}
+                      className="text-[#0e3175] font-medium hover:underline transition-all hover:-translate-y-0.5"
+                    >
+                      S'inscrire
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    Déjà un compte ?{" "}
+                    <button
+                      onClick={() => setIsLogin(true)}
+                      className="text-[#0e3175] font-medium hover:underline transition-all hover:-translate-y-0.5"
+                    >
+                      Se connecter
+                    </button>
+                  </>
+                )}
+              </p>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
