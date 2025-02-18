@@ -129,7 +129,7 @@ const Index = () => {
                 className="animate-[spin_1s_ease-in-out]"
                 labelLine={false}
                 fontSize={16}
-                labelStyle={{ fill: '#000000', textShadow: 'none' }}
+                style={{ fontWeight: 500 }}
               >
                 {equipmentData.map((entry, index) => (
                   <Cell 
