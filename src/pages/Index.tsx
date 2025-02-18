@@ -118,15 +118,17 @@ const Index = () => {
 
         <Card className="p-4 bg-white">
           <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
-          <div className="h-[500px] flex items-center justify-center">
-            <PieChart width={500} height={400}>
+          <div className="h-[450px] flex items-center justify-center">
+            <PieChart width={450} height={350}>
               <Pie
                 data={equipmentData}
-                innerRadius={80}
-                outerRadius={160}
+                innerRadius={70}
+                outerRadius={140}
                 dataKey="value"
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 className="animate-[spin_1s_ease-in-out]"
+                labelLine={true}
+                fontSize={14}
               >
                 {equipmentData.map((entry, index) => (
                   <Cell 
