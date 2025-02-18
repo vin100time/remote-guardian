@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User, Lock } from "lucide-react";
+import { User, Lock, Wifi } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const Landing = () => {
@@ -61,6 +61,12 @@ const Landing = () => {
                   <Lock className="h-5 w-5 text-[#0e3175]" />
                 </div>
                 <span className="text-gray-700">Alertes en temps réel sur tous vos appareils</span>
+              </div>
+              <div className="flex items-center gap-3 p-4 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-100">
+                <div className="bg-[#0e3175]/10 p-2 rounded-full">
+                  <Wifi className="h-5 w-5 text-[#0e3175]" />
+                </div>
+                <span className="text-gray-700">Accès à distance à vos équipements où que vous soyez</span>
               </div>
             </div>
           </div>
