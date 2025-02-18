@@ -10,25 +10,27 @@ const Landing = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#0e3175]/5 to-white">
       {/* Navigation */}
       <nav className="border-b bg-white/50 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Shield className="h-8 w-8 text-purple-600" />
+              <Shield className="h-8 w-8 text-[#0e3175]" />
               <span className="text-xl font-bold">Vigile OS</span>
             </div>
             <div className="flex items-center gap-4">
               <Button 
                 variant={isLogin ? "default" : "outline"}
                 onClick={() => setIsLogin(true)}
+                className={isLogin ? "bg-[#0e3175] hover:bg-[#0e3175]/90" : ""}
               >
                 Connexion
               </Button>
               <Button 
                 variant={!isLogin ? "default" : "outline"}
                 onClick={() => setIsLogin(false)}
+                className={!isLogin ? "bg-[#0e3175] hover:bg-[#0e3175]/90" : ""}
               >
                 S'inscrire
               </Button>
@@ -50,20 +52,20 @@ const Landing = () => {
             </p>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="bg-green-100 p-2 rounded-full">
-                  <Shield className="h-5 w-5 text-green-600" />
+                <div className="bg-[#0e3175]/10 p-2 rounded-full">
+                  <Shield className="h-5 w-5 text-[#0e3175]" />
                 </div>
                 <span className="text-gray-700">Sécurité renforcée et monitoring 24/7</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="bg-blue-100 p-2 rounded-full">
-                  <Shield className="h-5 w-5 text-blue-600" />
+                <div className="bg-[#0e3175]/10 p-2 rounded-full">
+                  <Shield className="h-5 w-5 text-[#0e3175]" />
                 </div>
                 <span className="text-gray-700">Alertes en temps réel sur tous vos appareils</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="bg-purple-100 p-2 rounded-full">
-                  <Shield className="h-5 w-5 text-purple-600" />
+                <div className="bg-[#0e3175]/10 p-2 rounded-full">
+                  <Shield className="h-5 w-5 text-[#0e3175]" />
                 </div>
                 <span className="text-gray-700">Tableau de bord personnalisable et intuitif</span>
               </div>
@@ -108,7 +110,7 @@ const Landing = () => {
                 </div>
               )}
 
-              <Button className="w-full" size="lg">
+              <Button className="w-full bg-[#0e3175] hover:bg-[#0e3175]/90" size="lg">
                 {isLogin ? (
                   <User className="mr-2 h-4 w-4" />
                 ) : (
@@ -124,7 +126,7 @@ const Landing = () => {
                   Pas encore de compte ?{" "}
                   <button
                     onClick={() => setIsLogin(false)}
-                    className="text-purple-600 hover:underline"
+                    className="text-[#0e3175] hover:underline"
                   >
                     S'inscrire
                   </button>
@@ -134,7 +136,7 @@ const Landing = () => {
                   Déjà un compte ?{" "}
                   <button
                     onClick={() => setIsLogin(true)}
-                    className="text-purple-600 hover:underline"
+                    className="text-[#0e3175] hover:underline"
                   >
                     Se connecter
                   </button>
