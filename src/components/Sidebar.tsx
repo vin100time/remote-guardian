@@ -30,7 +30,7 @@ export const Sidebar = () => {
           <Menu size={20} />
         </button>
         {!isCollapsed && (
-          <h1 className="text-xl font-bold text-[#9b87f5]">Vigileos</h1>
+          <h1 className="text-xl font-bold text-[#1d4ed8]">Vigileos</h1>
         )}
       </div>
       
@@ -46,7 +46,7 @@ export const Sidebar = () => {
               className={cn(
                 "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors",
                 isActive 
-                  ? "bg-[#9b87f5] text-white" 
+                  ? "bg-[#1d4ed8] text-white" 
                   : "hover:bg-gray-100"
               )}
             >
