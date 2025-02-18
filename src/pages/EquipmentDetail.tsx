@@ -1,3 +1,4 @@
+
 import { useParams, Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,12 +6,15 @@ import { ArrowLeft, ExternalLink, Edit2Icon, Trash2Icon, CameraIcon, VideoIcon, 
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const EquipmentDetail = () => {
   const { id } = useParams();
   const [selectedPort, setSelectedPort] = useState<string>("");
+  const [customPort, setCustomPort] = useState<string>("");
   const { toast } = useToast();
 
   const getIcon = (type: string) => {
@@ -35,17 +39,28 @@ const EquipmentDetail = () => {
   };
 
   const handleAccess = () => {
-    if (!selectedPort) {
+    const portToUse = selectedPort === "custom" ? customPort : selectedPort;
+    
+    if (!portToUse) {
       toast({
         title: "Erreur",
-        description: "Veuillez sélectionner un port",
+        description: "Veuillez sélectionner ou saisir un port",
         variant: "destructive",
+      });
+      return;
+    }
+
+    if (portToUse === "22") {
+      // Pour le port SSH, on pourrait rediriger vers un terminal web comme Wetty ou Ttyd
+      toast({
+        title: "Information",
+        description: "L'accès SSH via terminal web sera bientôt disponible",
       });
       return;
     }
     
     const baseUrl = equipment.ip;
-    const url = `http://${baseUrl}:${selectedPort}`;
+    const url = `http://${baseUrl}:${portToUse}`;
     window.open(url, '_blank');
   };
 
@@ -73,6 +88,8 @@ const EquipmentDetail = () => {
     { value: "443", label: "HTTPS (443)" },
     { value: "8080", label: "HTTP Alt (8080)" },
     { value: "8443", label: "HTTPS Alt (8443)" },
+    { value: "22", label: "SSH (22) - Terminal Web" },
+    { value: "custom", label: "Port personnalisé" },
   ];
 
   return (
@@ -98,22 +115,51 @@ const EquipmentDetail = () => {
               <DialogHeader>
                 <DialogTitle>Sélectionner un port d'accès</DialogTitle>
               </DialogHeader>
-              <div className="py-4">
-                <Select
-                  value={selectedPort}
-                  onValueChange={setSelectedPort}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choisir un port" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {availablePorts.map((port) => (
-                      <SelectItem key={port.value} value={port.value}>
-                        {port.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div className="py-4 space-y-4">
+                <div className="space-y-2">
+                  <Label>Port</Label>
+                  <Select
+                    value={selectedPort}
+                    onValueChange={(value) => {
+                      setSelectedPort(value);
+                      if (value !== "custom") {
+                        setCustomPort("");
+                      }
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choisir un port" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availablePorts.map((port) => (
+                        <SelectItem key={port.value} value={port.value}>
+                          {port.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {selectedPort === "custom" && (
+                  <div className="space-y-2">
+                    <Label>Port personnalisé</Label>
+                    <Input
+                      type="number"
+                      placeholder="Entrez le numéro de port"
+                      value={customPort}
+                      onChange={(e) => setCustomPort(e.target.value)}
+                      min="1"
+                      max="65535"
+                    />
+                  </div>
+                )}
+
+                {selectedPort === "22" && (
+                  <p className="text-sm text-muted-foreground">
+                    Le terminal web vous permettra d'accéder à l'équipement via SSH directement depuis votre navigateur.
+                  </p>
+                )}
+
                 <div className="mt-4 flex justify-end">
                   <Button
                     onClick={handleAccess}
