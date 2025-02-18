@@ -43,7 +43,7 @@ const SiteEquipment = () => {
       case 'pc':
         return <MonitorIcon className="w-5 h-5" />;
       default:
-        return <ServerIcon className="w-5 h-5" />; // Changed from DeviceIcon to ServerIcon
+        return <ServerIcon className="w-5 h-5" />;
     }
   };
 
@@ -116,7 +116,7 @@ const SiteEquipment = () => {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredEquipment.map((item) => (
-          <Link to={`/equipment/${item.id}`} key={item.id}>
+          <Link to={`/equipements/${item.id}`} key={item.id}>
             <Card className="p-4 hover:shadow-lg transition-all">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
