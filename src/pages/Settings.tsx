@@ -6,15 +6,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
-import { CreditCard, Wallet } from "lucide-react"; // Remplacé PaypalIcon par Wallet
+import { CreditCard, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
 const Settings = () => {
-  const [notifications, setNotifications] = useState(true);
-  const [emailAlerts, setEmailAlerts] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<"card" | "paypal" | null>(null);
-  const [siteCount, setSiteCount] = useState(3); // Exemple avec 3 sites
+  const [siteCount, setSiteCount] = useState(3);
+  const [cardInfo, setCardInfo] = useState({
+    number: "",
+    name: "",
+    expiry: "",
+    cvc: ""
+  });
+  const [paypalInfo, setPaypalInfo] = useState({
+    email: ""
+  });
 
   const pricePerSite = 15;
   const totalHT = siteCount * pricePerSite;
@@ -25,6 +32,17 @@ const Settings = () => {
       toast.error("Veuillez sélectionner une méthode de paiement");
       return;
     }
+
+    if (selectedPaymentMethod === "card" && (!cardInfo.number || !cardInfo.name || !cardInfo.expiry || !cardInfo.cvc)) {
+      toast.error("Veuillez remplir tous les champs de la carte");
+      return;
+    }
+
+    if (selectedPaymentMethod === "paypal" && !paypalInfo.email) {
+      toast.error("Veuillez remplir votre email PayPal");
+      return;
+    }
+
     toast.success("Paiement simulé avec succès !");
   };
 
@@ -32,9 +50,9 @@ const Settings = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Configuration</h1>
+          <h1 className="text-2xl font-bold">Souscription</h1>
           <p className="text-muted-foreground">
-            Paramètres de l'application
+            Gérez votre abonnement
           </p>
         </div>
       </div>
@@ -91,31 +109,68 @@ const Settings = () => {
                   <span>PayPal</span>
                 </button>
               </div>
+
+              {selectedPaymentMethod === "card" && (
+                <div className="space-y-4 border rounded-lg p-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="cardNumber">Numéro de carte</Label>
+                    <Input
+                      id="cardNumber"
+                      placeholder="4242 4242 4242 4242"
+                      value={cardInfo.number}
+                      onChange={(e) => setCardInfo({...cardInfo, number: e.target.value})}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="cardName">Nom sur la carte</Label>
+                    <Input
+                      id="cardName"
+                      placeholder="JOHN DOE"
+                      value={cardInfo.name}
+                      onChange={(e) => setCardInfo({...cardInfo, name: e.target.value})}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="cardExpiry">Date d'expiration</Label>
+                      <Input
+                        id="cardExpiry"
+                        placeholder="MM/AA"
+                        value={cardInfo.expiry}
+                        onChange={(e) => setCardInfo({...cardInfo, expiry: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="cardCVC">CVC</Label>
+                      <Input
+                        id="cardCVC"
+                        placeholder="123"
+                        value={cardInfo.cvc}
+                        onChange={(e) => setCardInfo({...cardInfo, cvc: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {selectedPaymentMethod === "paypal" && (
+                <div className="space-y-4 border rounded-lg p-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="paypalEmail">Email PayPal</Label>
+                    <Input
+                      id="paypalEmail"
+                      type="email"
+                      placeholder="john.doe@example.com"
+                      value={paypalInfo.email}
+                      onChange={(e) => setPaypalInfo({...paypalInfo, email: e.target.value})}
+                    />
+                  </div>
+                </div>
+              )}
+
               <Button onClick={handlePayment} className="w-full">
                 Payer {totalTTC.toFixed(2)}€
               </Button>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="p-6 glass">
-          <h2 className="text-lg font-semibold mb-4">Notifications</h2>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="notifications">Activer les notifications</Label>
-              <Switch
-                id="notifications"
-                checked={notifications}
-                onCheckedChange={setNotifications}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <Label htmlFor="emailAlerts">Alertes par email</Label>
-              <Switch
-                id="emailAlerts"
-                checked={emailAlerts}
-                onCheckedChange={setEmailAlerts}
-              />
             </div>
           </div>
         </Card>
