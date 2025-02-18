@@ -105,7 +105,7 @@ const EquipmentDetail = () => {
           <Dialog>
             <DialogTrigger asChild>
               <Button 
-                className="bg-[#9b87f5] hover:bg-[#8b7ae0]"
+                className="bg-[#221F26] hover:bg-[#2a272f]"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Accéder
@@ -163,7 +163,7 @@ const EquipmentDetail = () => {
                 <div className="mt-4 flex justify-end">
                   <Button
                     onClick={handleAccess}
-                    className="bg-[#9b87f5] hover:bg-[#8b7ae0]"
+                    className="bg-[#221F26] hover:bg-[#2a272f]"
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Accéder
