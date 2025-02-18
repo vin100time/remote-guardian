@@ -2,7 +2,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { PlusCircle } from "lucide-react";
 import { EquipmentFilters } from "@/components/equipment/EquipmentFilters";
 import { EquipmentTable } from "@/components/equipment/EquipmentTable";
 
@@ -87,10 +86,6 @@ const Equipment = () => {
             Gestion et surveillance des équipements réseau
           </p>
         </div>
-        <Button className="bg-indigo-700 hover:bg-indigo-800">
-          <PlusCircle className="w-4 h-4 mr-2" />
-          Nouvel équipement
-        </Button>
       </div>
 
       <EquipmentFilters 
