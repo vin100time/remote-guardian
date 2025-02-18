@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
-import { CreditCard, PaypalIcon } from "lucide-react";
+import { CreditCard, Wallet } from "lucide-react"; // Remplacé PaypalIcon par Wallet
 import { toast } from "sonner";
 
 const Settings = () => {
@@ -87,7 +87,7 @@ const Settings = () => {
                     selectedPaymentMethod === "paypal" ? "border-primary bg-primary/5" : ""
                   }`}
                 >
-                  <PaypalIcon className="w-5 h-5" />
+                  <Wallet className="w-5 h-5" />
                   <span>PayPal</span>
                 </button>
               </div>
