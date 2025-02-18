@@ -1,12 +1,17 @@
-
 import { useParams, Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ExternalLink, Edit2Icon, Trash2Icon, CameraIcon, VideoIcon, NetworkIcon, ServerIcon, WifiIcon, RouterIcon, MonitorIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const EquipmentDetail = () => {
   const { id } = useParams();
+  const [selectedPort, setSelectedPort] = useState<string>("");
+  const { toast } = useToast();
 
   const getIcon = (type: string) => {
     switch(type) {
@@ -25,11 +30,25 @@ const EquipmentDetail = () => {
       case 'pc':
         return <MonitorIcon className="w-5 h-5" />;
       default:
-        return <ServerIcon className="w-5 h-5" />; // Changed from DeviceIcon to ServerIcon
+        return <ServerIcon className="w-5 h-5" />;
     }
   };
 
-  // Simulons un équipement pour l'exemple
+  const handleAccess = () => {
+    if (!selectedPort) {
+      toast({
+        title: "Erreur",
+        description: "Veuillez sélectionner un port",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const baseUrl = equipment.ip;
+    const url = `http://${baseUrl}:${selectedPort}`;
+    window.open(url, '_blank');
+  };
+
   const equipment = {
     id: 1,
     name: "Router-01",
@@ -49,6 +68,13 @@ const EquipmentDetail = () => {
     ]
   };
 
+  const availablePorts = [
+    { value: "80", label: "HTTP (80)" },
+    { value: "443", label: "HTTPS (443)" },
+    { value: "8080", label: "HTTP Alt (8080)" },
+    { value: "8443", label: "HTTPS Alt (8443)" },
+  ];
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -59,10 +85,47 @@ const EquipmentDetail = () => {
           <h1 className="text-2xl font-bold">{equipment.name}</h1>
         </div>
         <div className="flex items-center gap-2">
-          <Button className="bg-indigo-700 hover:bg-indigo-800" onClick={() => window.open(`http://${equipment.ip}`)}>
-            <ExternalLink className="w-4 h-4 mr-2" />
-            Accéder
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button 
+                className="bg-[#9b87f5] hover:bg-[#8b7ae0]"
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Accéder
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Sélectionner un port d'accès</DialogTitle>
+              </DialogHeader>
+              <div className="py-4">
+                <Select
+                  value={selectedPort}
+                  onValueChange={setSelectedPort}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choisir un port" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availablePorts.map((port) => (
+                      <SelectItem key={port.value} value={port.value}>
+                        {port.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="mt-4 flex justify-end">
+                  <Button
+                    onClick={handleAccess}
+                    className="bg-[#9b87f5] hover:bg-[#8b7ae0]"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Accéder
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
           <Button variant="outline">
             <Edit2Icon className="w-4 h-4 mr-2" />
             Modifier
