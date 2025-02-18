@@ -1,4 +1,3 @@
-
 import { useParams, Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,11 +9,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { EditEquipmentForm } from "@/components/equipment/EditEquipmentForm";
 
 const EquipmentDetail = () => {
   const { id } = useParams();
   const [selectedPort, setSelectedPort] = useState<string>("");
   const [customPort, setCustomPort] = useState<string>("");
+  const [isEditing, setIsEditing] = useState(false);
   const { toast } = useToast();
 
   const getIcon = (type: string) => {
@@ -92,6 +93,15 @@ const EquipmentDetail = () => {
     { value: "custom", label: "Port personnalisé" },
   ];
 
+  if (isEditing) {
+    return (
+      <EditEquipmentForm
+        equipment={equipment}
+        onClose={() => setIsEditing(false)}
+      />
+    );
+  }
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -104,9 +114,7 @@ const EquipmentDetail = () => {
         <div className="flex items-center gap-2">
           <Dialog>
             <DialogTrigger asChild>
-              <Button 
-                className="bg-[#0e3175] hover:bg-[#0e3175]/90"
-              >
+              <Button className="bg-[#0e3175] hover:bg-[#0e3175]/90">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Accéder
               </Button>
@@ -172,7 +180,10 @@ const EquipmentDetail = () => {
               </div>
             </DialogContent>
           </Dialog>
-          <Button variant="outline">
+          <Button 
+            variant="outline"
+            onClick={() => setIsEditing(true)}
+          >
             <Edit2Icon className="w-4 h-4 mr-2" />
             Modifier
           </Button>
