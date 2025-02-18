@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -21,16 +21,28 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <Routes>
+        {/* Routes publiques */}
         <Route path="/" element={<Landing />} />
+        
+        {/* Routes protégées avec Layout */}
         <Route path="/" element={<Layout />}>
-          <Route path="/dashboard" element={<Index />} />
-          <Route path="/sites" element={<Sites />} />
-          <Route path="/sites/:siteId/equipment" element={<SiteEquipment />} />
-          <Route path="/equipment/:id" element={<EquipmentDetail />} />
-          <Route path="/equipements" element={<Equipment />} />
-          <Route path="/alertes" element={<Alerts />} />
-          <Route path="/configuration" element={<Settings />} />
-          <Route path="/compte" element={<Account />} />
+          {/* Redirection de / vers /dashboard quand connecté */}
+          <Route path="dashboard" element={<Index />} />
+          
+          {/* Gestion des sites */}
+          <Route path="sites" element={<Sites />} />
+          <Route path="sites/:siteId/equipment" element={<SiteEquipment />} />
+          
+          {/* Gestion des équipements */}
+          <Route path="equipements" element={<Equipment />} />
+          <Route path="equipements/:id" element={<EquipmentDetail />} />
+          
+          {/* Autres routes */}
+          <Route path="alertes" element={<Alerts />} />
+          <Route path="configuration" element={<Settings />} />
+          <Route path="compte" element={<Account />} />
+          
+          {/* Gestion des routes inconnues */}
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

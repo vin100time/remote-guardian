@@ -9,10 +9,10 @@ export const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   
   const links = [
-    { name: "Tableau de bord", icon: Home, path: "/" },
+    { name: "Tableau de bord", icon: Home, path: "/dashboard" },
     { name: "Sites clients", icon: Users, path: "/sites" },
     { name: "Équipements", icon: Monitor, path: "/equipements" },
-    { name: "Alerts", icon: Bell, path: "/alertes" },
+    { name: "Alertes", icon: Bell, path: "/alertes" },
     { name: "Configuration", icon: Settings, path: "/configuration" },
     { name: "Compte", icon: User, path: "/compte" }
   ];
