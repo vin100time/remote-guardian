@@ -118,7 +118,7 @@ const Index = () => {
 
         <Card className="p-4 bg-white">
           <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
-          <div style={{ width: '100%', height: '300px' }}>
+          <div style={{ width: '100%', height: '400px' }}>
             <ResponsiveContainer>
               <BarChart
                 data={equipmentData}
