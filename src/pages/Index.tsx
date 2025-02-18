@@ -6,11 +6,11 @@ import { UserIcon } from "lucide-react";
 
 const Index = () => {
   const equipmentData = [
-    { name: 'Caméras', value: 35, color: '#2196F3', displayName: 'Cam 35%' },
-    { name: 'Routeurs', value: 15, color: '#FFA726', displayName: 'Rou 15%' },
-    { name: 'Switches', value: 20, color: '#7E69AB', displayName: 'Sw 20%' },
-    { name: 'Serveurs', value: 10, color: '#78909C', displayName: 'Serv 10%' },
-    { name: 'Points d\'accès', value: 10, color: '#66BB6A', displayName: 'PA 10%' },
+    { name: 'Caméras', value: 35, color: '#2196F3', displayName: 'Caméras 35%' },
+    { name: 'Routeurs', value: 15, color: '#FFA726', displayName: 'Routeurs 15%' },
+    { name: 'Switches', value: 20, color: '#7E69AB', displayName: 'Switches 20%' },
+    { name: 'Serveurs', value: 10, color: '#78909C', displayName: 'Serveurs 10%' },
+    { name: 'Points d\'accès', value: 10, color: '#66BB6A', displayName: 'Points d\'accès 10%' },
     { name: 'Autres', value: 10, color: '#8E9196', displayName: 'Autres 10%' }
   ];
 
@@ -115,14 +115,14 @@ const Index = () => {
           <SitesMap />
         </Card>
 
-        <Card className="p-4 bg-white">
+        <Card className="p-4 bg-white h-full">
           <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
-          <div className="h-[400px] flex items-center justify-center">
-            <PieChart width={400} height={300}>
+          <div className="w-full h-[calc(100%-2rem)] flex items-center justify-center">
+            <PieChart width={500} height={400}>
               <Pie
                 data={equipmentData}
-                innerRadius={60}
-                outerRadius={120}
+                innerRadius={80}
+                outerRadius={160}
                 dataKey="value"
                 label={(entry) => entry.displayName}
                 className="animate-[spin_1s_ease-in-out]"
