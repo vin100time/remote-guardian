@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell } from 'recharts';
 import { cn } from "@/lib/utils";
@@ -19,31 +20,36 @@ const Index = () => {
       label: "Total des sites", 
       value: "12",
       subtext: "Sites surveillés",
-      textColor: "#1A1F2C"
+      textColor: "#1A1F2C",
+      delay: "0ms"
     },
     { 
       label: "En ligne", 
       value: "10", 
       subtext: "Sites actifs",
-      textColor: "#4CAF50"
+      textColor: "#4CAF50",
+      delay: "100ms"
     },
     { 
       label: "Hors ligne", 
       value: "1", 
       subtext: "Sites inactifs",
-      textColor: "#F44336"
+      textColor: "#F44336",
+      delay: "200ms"
     },
     { 
       label: "Alertes", 
       value: "6", 
       subtext: "Dernières 24h",
-      textColor: "#FF9800"
+      textColor: "#FF9800",
+      delay: "300ms"
     },
     { 
       label: "Disponibilité", 
       value: "99.4%", 
       subtext: "Temps de service",
-      textColor: "#1A1F2C"
+      textColor: "#1A1F2C",
+      delay: "400ms"
     }
   ];
 
@@ -87,9 +93,16 @@ const Index = () => {
 
       <div className="grid grid-cols-5 gap-4">
         {stats.map((stat) => (
-          <Card key={stat.label} className="p-4 bg-white">
+          <Card 
+            key={stat.label} 
+            className="p-4 bg-white transform hover:scale-105 transition-all duration-300 animate-fade-in cursor-pointer"
+            style={{ animationDelay: stat.delay }}
+          >
             <p className="text-sm text-muted-foreground">{stat.label}</p>
-            <p className="text-2xl font-bold mt-2" style={{ color: stat.textColor }}>
+            <p 
+              className="text-2xl font-bold mt-2 animate-[counter_2s_ease-out_1] transform hover:translate-y-[-2px] transition-transform" 
+              style={{ color: stat.textColor }}
+            >
               {stat.value}
             </p>
             <p className="text-xs text-muted-foreground mt-1">{stat.subtext}</p>
@@ -105,17 +118,22 @@ const Index = () => {
 
         <Card className="p-4 bg-white">
           <h2 className="text-lg font-semibold mb-4">Répartition des équipements</h2>
-          <div className="h-[400px] flex items-center justify-center">
-            <PieChart width={400} height={300}>
+          <div className="h-[500px] flex items-center justify-center">
+            <PieChart width={500} height={400}>
               <Pie
                 data={equipmentData}
-                innerRadius={60}
-                outerRadius={80}
+                innerRadius={80}
+                outerRadius={160}
                 dataKey="value"
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                className="animate-[spin_1s_ease-in-out]"
               >
                 {equipmentData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={entry.color}
+                    className="transition-all duration-300 hover:opacity-80"
+                  />
                 ))}
               </Pie>
             </PieChart>
@@ -129,7 +147,7 @@ const Index = () => {
           {alerts.map((alert, index) => (
             <div
               key={index}
-              className="p-3 rounded-lg"
+              className="p-3 rounded-lg transform hover:scale-[1.02] transition-all duration-300"
               style={{
                 backgroundColor: alert.type === 'error' ? '#FEF2F2' : 
                                 alert.type === 'warning' ? '#FEF3C7' : 
