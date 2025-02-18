@@ -12,10 +12,10 @@ const Layout = () => {
       <Sidebar isCollapsed={isSidebarCollapsed} onCollapse={setIsSidebarCollapsed} />
       <main className={cn(
         "transition-all duration-300",
-        isSidebarCollapsed ? "pl-20" : "pl-64",
+        isSidebarCollapsed ? "pl-[82px]" : "pl-[260px]",
         "w-full"
       )}>
-        <div className="container mx-auto p-4 sm:p-6 max-w-7xl">
+        <div className="p-2 sm:p-4">
           <Outlet />
         </div>
       </main>
