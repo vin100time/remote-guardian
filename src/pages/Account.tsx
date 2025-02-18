@@ -1,6 +1,5 @@
-
 import { Card } from "@/components/ui/card";
-import { UserIcon } from "lucide-react";
+import { UserIcon, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,11 +16,23 @@ const Account = () => {
     timezone: "Europe/Paris",
     language: "fr",
     lastLogin: new Date().toLocaleString(),
-    avatar: null
+    companyLogo: "/company-logo.png"
   });
 
   const handleSave = () => {
     toast.success("Modifications enregistrées avec succès");
+    localStorage.setItem('companyLogo', user.companyLogo);
+  };
+
+  const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUser({ ...user, companyLogo: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -39,12 +50,35 @@ const Account = () => {
       <div className="grid gap-4">
         <Card className="p-6 glass">
           <div className="flex items-center gap-4">
-            <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center">
-              <UserIcon className="w-8 h-8 text-muted-foreground" />
+            <div className="relative">
+              <div className="h-24 w-24 rounded-lg bg-secondary flex items-center justify-center overflow-hidden">
+                {user.companyLogo ? (
+                  <img 
+                    src={user.companyLogo} 
+                    alt="Company Logo" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <UserIcon className="w-12 h-12 text-muted-foreground" />
+                )}
+              </div>
+              <label 
+                htmlFor="logo-upload" 
+                className="absolute -bottom-2 -right-2 p-2 bg-primary rounded-full cursor-pointer hover:bg-primary/90 transition-colors"
+              >
+                <Camera className="w-4 h-4 text-white" />
+              </label>
+              <input
+                id="logo-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleLogoChange}
+              />
             </div>
             <div>
-              <h2 className="text-xl font-semibold">{user.name}</h2>
-              <p className="text-muted-foreground">{user.email}</p>
+              <h2 className="text-xl font-semibold">Global Secure SARL</h2>
+              <p className="text-muted-foreground">Configuration de l'entreprise</p>
             </div>
           </div>
         </Card>

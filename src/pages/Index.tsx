@@ -1,11 +1,19 @@
-
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell } from 'recharts';
 import { cn } from "@/lib/utils";
 import SitesMap from "@/components/SitesMap";
+import { useEffect, useState } from "react";
 
 const Index = () => {
-  // Données pour le graphique circulaire
+  const [companyLogo, setCompanyLogo] = useState<string>("/placeholder.svg");
+
+  useEffect(() => {
+    const savedLogo = localStorage.getItem('companyLogo');
+    if (savedLogo) {
+      setCompanyLogo(savedLogo);
+    }
+  }, []);
+
   const equipmentData = [
     { name: 'Caméras', value: 35, color: '#2196F3' },
     { name: 'Routeurs', value: 15, color: '#FFA726' },
@@ -80,11 +88,13 @@ const Index = () => {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-sm">Global Secure SARL</span>
-          <img
-            src="/placeholder.svg"
-            alt="Company Logo"
-            className="w-8 h-8 rounded-full"
-          />
+          <div className="w-8 h-8 rounded-full overflow-hidden">
+            <img
+              src={companyLogo}
+              alt="Company Logo"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
       </div>
 
