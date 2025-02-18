@@ -79,7 +79,7 @@ const Sites = () => {
             Gestion et surveillance des sites
           </p>
         </div>
-        <Button className="bg-indigo-700 hover:bg-indigo-800">
+        <Button className="bg-[#0e3175] hover:bg-[#0e3175]/90">
           <PlusCircle className="w-4 h-4 mr-2" />
           Nouveau site
         </Button>
