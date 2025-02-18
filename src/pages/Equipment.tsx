@@ -89,7 +89,7 @@ const Equipment = () => {
       case 'pc':
         return <MonitorIcon className="w-5 h-5" />;
       default:
-        return <ServerIcon className="w-5 h-5" />; // Changed from DeviceIcon to ServerIcon
+        return <ServerIcon className="w-5 h-5" />;
     }
   };
 
@@ -222,7 +222,7 @@ const Equipment = () => {
                 <TableCell>{item.lastMaintenance}</TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Link to={`/equipment/${item.id}`}>
+                    <Link to={`/equipements/${item.id}`}>
                       <Button variant="ghost" size="icon">
                         <ArrowRight className="w-4 h-4" />
                       </Button>
