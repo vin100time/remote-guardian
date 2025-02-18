@@ -10,26 +10,26 @@ const Landing = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0e3175]/5 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#0e3175]/5 via-white to-[#0e3175]/5">
       {/* Navigation */}
-      <nav className="border-b bg-white/50 backdrop-blur-sm">
+      <nav className="border-b bg-white/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold text-[#0e3175]">Vigileos.</span>
+              <span className="text-2xl font-bold text-[#0e3175] tracking-tight">Vigileos.</span>
             </div>
             <div className="flex items-center gap-4">
               <Button 
                 variant={isLogin ? "default" : "outline"}
                 onClick={() => setIsLogin(true)}
-                className={isLogin ? "bg-[#0e3175] hover:bg-[#0e3175]/90" : ""}
+                className={isLogin ? "bg-[#0e3175] hover:bg-[#0e3175]/90 transition-all duration-300" : ""}
               >
                 Connexion
               </Button>
               <Button 
                 variant={!isLogin ? "default" : "outline"}
                 onClick={() => setIsLogin(false)}
-                className={!isLogin ? "bg-[#0e3175] hover:bg-[#0e3175]/90" : ""}
+                className={!isLogin ? "bg-[#0e3175] hover:bg-[#0e3175]/90 transition-all duration-300" : ""}
               >
                 S'inscrire
               </Button>
@@ -39,42 +39,53 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-2 gap-16 items-center">
-          <div>
-            <h1 className="text-5xl font-bold leading-tight text-gray-900 mb-6">
-              Supervision à distance de vos sites en temps réel
-            </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              Vigileos vous permet de surveiller tous vos sites et équipements depuis une interface unique, 
-              avec des alertes en temps réel et des analyses détaillées.
-            </p>
+      <div className="container mx-auto px-6 py-24">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <h1 className="text-6xl font-bold leading-tight text-gray-900 tracking-tight">
+                Supervision à distance de vos sites en <span className="text-[#0e3175]">temps réel</span>
+              </h1>
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Vigileos vous permet de surveiller tous vos sites et équipements depuis une interface unique, 
+                avec des alertes en temps réel et des analyses détaillées.
+              </p>
+            </div>
+            
             <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-100">
-                <div className="bg-[#0e3175]/10 p-2 rounded-full">
-                  <User className="h-5 w-5 text-[#0e3175]" />
+              <div className="transform hover:scale-[1.02] transition-all duration-300">
+                <div className="flex items-center gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="bg-[#0e3175]/10 p-3 rounded-xl">
+                    <User className="h-6 w-6 text-[#0e3175]" />
+                  </div>
+                  <span className="text-gray-700 font-medium">Sécurité renforcée et monitoring 24/7</span>
                 </div>
-                <span className="text-gray-700">Sécurité renforcée et monitoring 24/7</span>
               </div>
-              <div className="flex items-center gap-3 p-4 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-100">
-                <div className="bg-[#0e3175]/10 p-2 rounded-full">
-                  <Lock className="h-5 w-5 text-[#0e3175]" />
+
+              <div className="transform hover:scale-[1.02] transition-all duration-300">
+                <div className="flex items-center gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="bg-[#0e3175]/10 p-3 rounded-xl">
+                    <Lock className="h-6 w-6 text-[#0e3175]" />
+                  </div>
+                  <span className="text-gray-700 font-medium">Alertes en temps réel sur tous vos appareils</span>
                 </div>
-                <span className="text-gray-700">Alertes en temps réel sur tous vos appareils</span>
               </div>
-              <div className="flex items-center gap-3 p-4 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-100">
-                <div className="bg-[#0e3175]/10 p-2 rounded-full">
-                  <Wifi className="h-5 w-5 text-[#0e3175]" />
+
+              <div className="transform hover:scale-[1.02] transition-all duration-300">
+                <div className="flex items-center gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="bg-[#0e3175]/10 p-3 rounded-xl">
+                    <Wifi className="h-6 w-6 text-[#0e3175]" />
+                  </div>
+                  <span className="text-gray-700 font-medium">Accès à distance à vos équipements où que vous soyez</span>
                 </div>
-                <span className="text-gray-700">Accès à distance à vos équipements où que vous soyez</span>
               </div>
             </div>
           </div>
 
           {/* Login/Signup Form */}
-          <Card className="p-8 shadow-xl bg-white/70 backdrop-blur-sm border-0">
+          <Card className="p-8 shadow-2xl bg-white/80 backdrop-blur-lg border-0 rounded-2xl transform hover:scale-[1.01] transition-all duration-300">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold mb-2 text-[#0e3175]">
+              <h2 className="text-3xl font-bold mb-2 text-[#0e3175] tracking-tight">
                 {isLogin ? "Connexion" : "Créer un compte"}
               </h2>
               <p className="text-gray-600">
@@ -92,7 +103,7 @@ const Landing = () => {
                     id="company" 
                     type="text" 
                     placeholder="Global Secure SARL"
-                    className="h-12 px-4"
+                    className="h-12 px-4 bg-white/90"
                   />
                 </div>
               )}
@@ -103,7 +114,7 @@ const Landing = () => {
                   id="email" 
                   type="email" 
                   placeholder="contact@entreprise.fr"
-                  className="h-12 px-4"
+                  className="h-12 px-4 bg-white/90"
                 />
               </div>
 
@@ -112,7 +123,7 @@ const Landing = () => {
                 <Input 
                   id="password" 
                   type="password"
-                  className="h-12 px-4"
+                  className="h-12 px-4 bg-white/90"
                 />
               </div>
 
@@ -122,13 +133,13 @@ const Landing = () => {
                   <Input 
                     id="confirmPassword" 
                     type="password"
-                    className="h-12 px-4"
+                    className="h-12 px-4 bg-white/90"
                   />
                 </div>
               )}
 
               <Button 
-                className="w-full bg-[#0e3175] hover:bg-[#0e3175]/90 h-12 text-base font-medium transition-all duration-200 hover:shadow-lg"
+                className="w-full bg-[#0e3175] hover:bg-[#0e3175]/90 h-12 text-base font-medium transition-all duration-300 hover:shadow-lg"
               >
                 {isLogin ? (
                   <User className="mr-2 h-5 w-5" />
