@@ -1,5 +1,6 @@
+
 import { Card } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { cn } from "@/lib/utils";
 import SitesMap from "@/components/SitesMap";
 import { UserIcon } from "lucide-react";
@@ -146,7 +147,7 @@ const Index = () => {
                   }}
                 >
                   {equipmentData.map((entry, index) => (
-                    <Bar
+                    <Cell
                       key={`cell-${index}`}
                       fill={entry.color}
                       className="transition-all duration-300 hover:opacity-80"
